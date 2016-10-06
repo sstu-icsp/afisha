@@ -22,7 +22,7 @@ public class Event {
 	private Type type;
 	
 	@Column(name="title")
-	private String title;
+	private String fullName;
 	
 	@Column(name="date")
 	private String date;
@@ -63,12 +63,12 @@ public class Event {
 		this.type = type;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public String getDate() {
@@ -125,6 +125,13 @@ public class Event {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	@Override
+	public String toString() {
+		return "Event [id=" + id + ", type=" + type + ", fullName=" + fullName + ", date=" + date + ", city=" + city
+				+ ", coords=" + coords + ", description=" + description + ", image=" + image + ", rating=" + rating
+				+ ", user=" + user + "]";
 	}
 	
 	
