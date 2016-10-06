@@ -17,9 +17,9 @@ public class IndexController {
 	@RequestMapping(value={"/","/event","/event/list"})
 	public String index(ModelMap model)
 	{
-		Event ev=service.findById(1);
-		model.addAttribute("ev", ev);
-		return "students";
+		
+		model.addAttribute("Event", service.findById(1));
+		return "index";
 		
 	}
 

@@ -1,19 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+ 
   <title>Afisha</title>
 
-  <!-- Bootstrap -->
-  <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-  <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
+  <script type="text/javascript" src='<c:url value='/static/js/jquery-1.11.1.min.js'></c:url>'></script>
+  <script type="text/javascript" src='<c:url value='/static/js/moment-with-locales.min.js'></c:url>'></script>
+  <script type="text/javascript" src='<c:url value='/static/js/bootstrap.min.js'></c:url>'></script>
+  <script type="text/javascript" src="<c:url value='/static/js/bootstrap-datetimepicker.min.js'></c:url>"></script>
+  <link rel="stylesheet" href="<c:url value='/static/css/bootstrap.min.css'></c:url>">
+  <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-datetimepicker.min.css'></c:url>">
 </head>
 <body>
   <div class="container-fluid">  
@@ -68,11 +70,13 @@
         <H1>Today's Highlights, "Data"
         </H1>
       </div>
-<!-- Конкретное событие -->
+
       <div class="row-fluid">
+      
        <div class="col-sm-3 event">
         <a href="#" class="thumbnail eventImg">
-          <img>
+          
+          
         </a>
         <div class="row-fluid">
           <div class="col-sm-12">
@@ -86,13 +90,14 @@
             <hr>
           </div>
         </div>
-        <p> Title: @TitleName</p>
-        <p> Type: @TypeName</p>
+       
+       
       </div>
-<!-- /Конкретное событие -->
+      
+
     </div>
   </div>  
-
+${event.fullName}
   <div class="col-sm-3 rightFilters">
     <div class="row-fluid authentication">
       <div class="col-sm-5">
