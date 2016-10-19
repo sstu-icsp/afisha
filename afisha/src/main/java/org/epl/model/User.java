@@ -5,8 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="users")
@@ -28,11 +34,40 @@ public class User {
 	@Column(name="password")
 	private String password;
 	
-	@Column(name="birthdate")
-	private String birthdate;
+	@ManyToOne
+	@JoinColumn(name="idRoles")
+	private Role role;
 	
-	@Column(name="city")
-	private String city;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "birthdate", nullable = false)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @NotNull
+	private LocalDate birthDate;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="idCities")
+	private City city;
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "timeFrom", nullable = false)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @NotNull
+	private LocalDate timeFrom;
+	
+	
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "timeTo", nullable = false)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @NotNull
+	private LocalDate timeTo;
+	
+	@Column(name="gender")
+	private int gender;
+	
+	@ManyToOne
+	@JoinColumn(name="idImages")
+	private Image image;
 
 	public int getId() {
 		return id;
@@ -66,79 +101,63 @@ public class User {
 		this.password = password;
 	}
 
-	public String getBirthdate() {
-		return birthdate;
+	public Role getRole() {
+		return role;
 	}
 
-	public void setBirthdate(String birthdate) {
-		this.birthdate = birthdate;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
-	public String getCity() {
+	public LocalDate getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(LocalDate birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		return result;
+	public LocalDate getTimeFrom() {
+		return timeFrom;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (birthdate == null) {
-			if (other.birthdate != null)
-				return false;
-		} else if (!birthdate.equals(other.birthdate))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (nickname == null) {
-			if (other.nickname != null)
-				return false;
-		} else if (!nickname.equals(other.nickname))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		return true;
+	public void setTimeFrom(LocalDate timeFrom) {
+		this.timeFrom = timeFrom;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", nickname=" + nickname + ", password=" + password
-				+ ", birthdate=" + birthdate + ", city=" + city + "]";
+	public LocalDate getTimeTo() {
+		return timeTo;
 	}
+
+	public void setTimeTo(LocalDate timeTo) {
+		this.timeTo = timeTo;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	
 	
 	
 	
