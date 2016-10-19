@@ -1,11 +1,10 @@
 package org.epl.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.joda.time.LocalDate;
+import org.joda.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -27,12 +26,49 @@ public class User {
 	@NotNull
 	@Column(name="password")
 	private String password;
-	
-	@Column(name="birthdate")
-	private String birthdate;
-	
-	@Column(name="city")
-	private String city;
+
+	@ManyToOne
+	@JoinColumn(name="idRoles")
+	private Role role;
+
+	@Transient
+	private int roleId;
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name = "birthdate")
+	@org.hibernate.annotations.Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+	private LocalDate birthdate;
+
+	@ManyToOne
+	@JoinColumn(name="idCities")
+	private City city;
+
+	@Transient
+	private int cityId;
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name="timeFrom")
+	@org.hibernate.annotations.Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime timeFrom;
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name="timeTo")
+	@org.hibernate.annotations.Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	private LocalDateTime timeTo;
+
+	@ManyToOne
+	@JoinColumn(name="idGender")
+	private Gender gender;
+
+	@Transient
+	private int genderId;
+
+	@ManyToOne
+	@JoinColumn(name="idImages")
+	private Image image;
+
+	@Transient
+	private int imageId;
 
 	public int getId() {
 		return id;
@@ -66,81 +102,91 @@ public class User {
 		this.password = password;
 	}
 
-	public String getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 
-	public String getCity() {
+	public City getCity() {
 		return city;
 	}
 
-	public void setCity(String city) {
+	public void setCity(City city) {
 		this.city = city;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((birthdate == null) ? 0 : birthdate.hashCode());
-		result = prime * result + ((city == null) ? 0 : city.hashCode());
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
-		result = prime * result + ((nickname == null) ? 0 : nickname.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		return result;
+	public Role getRole() {
+		return role;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		if (birthdate == null) {
-			if (other.birthdate != null)
-				return false;
-		} else if (!birthdate.equals(other.birthdate))
-			return false;
-		if (city == null) {
-			if (other.city != null)
-				return false;
-		} else if (!city.equals(other.city))
-			return false;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (nickname == null) {
-			if (other.nickname != null)
-				return false;
-		} else if (!nickname.equals(other.nickname))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		return true;
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", nickname=" + nickname + ", password=" + password
-				+ ", birthdate=" + birthdate + ", city=" + city + "]";
+	public int getRoleId() {
+		return (role != null) ? role.getId() : roleId;
 	}
-	
-	
-	
 
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public int getCityId() {
+		return (city != null) ? city.getId() : cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+
+	public LocalDateTime getTimeFrom() {
+		return timeFrom;
+	}
+
+	public void setTimeFrom(LocalDateTime timeFrom) {
+		this.timeFrom = timeFrom;
+	}
+
+	public LocalDateTime getTimeTo() {
+		return timeTo;
+	}
+
+	public void setTimeTo(LocalDateTime timeTo) {
+		this.timeTo = timeTo;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public int getGenderId() {
+		return (gender != null) ? gender.getId() : genderId;
+	}
+
+	public void setGenderId(int genderId) {
+		this.genderId = genderId;
+	}
+
+	public Image getImage() {
+		return image;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public int getImageId() {
+		return imageId;
+	}
+
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
+	}
 }

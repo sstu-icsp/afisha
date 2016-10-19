@@ -97,7 +97,7 @@
 
     </div>
   </div>  
-${event.fullName}
+${event.title}
   <div class="col-sm-3 rightFilters">
     <div class="row-fluid authentication">
       <div class="col-sm-5">

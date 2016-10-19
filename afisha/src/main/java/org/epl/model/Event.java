@@ -1,13 +1,10 @@
 package org.epl.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.joda.time.LocalDateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="events")
@@ -20,15 +17,25 @@ public class Event {
 	@ManyToOne
 	@JoinColumn(name="idTypes")
 	private Type type;
+
+	@Transient
+	private int typeId;
 	
 	@Column(name="title")
-	private String fullName;
-	
-	@Column(name="date")
-	private String date;
-	
-	@Column(name="city")
-	private String city;
+	private String title;
+
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+	@Column(name = "date", nullable = false)
+	@org.hibernate.annotations.Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+	@NotNull
+	private LocalDateTime date;
+
+	@ManyToOne
+	@JoinColumn(name="idCities")
+	private City city;
+
+	@Transient
+	private int cityId;
 	
 	@Column(name="coords")
 	private String coords;
@@ -39,13 +46,16 @@ public class Event {
 	@ManyToOne
 	@JoinColumn(name="idImages")
 	private Image image;
-	
-	@Column(name="rating")
-	private float rating;
+
+	@Transient
+	private int imageId;
 	
 	@ManyToOne
-	@JoinColumn(name="idUsers")
+	@JoinColumn(name="idUserCreator")
 	private User user;
+
+	@Transient
+	private int userId;
 
 	public int getId() {
 		return id;
@@ -63,28 +73,20 @@ public class Event {
 		this.type = type;
 	}
 
-	public String getFullName() {
-		return fullName;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getDate() {
+	public LocalDateTime getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(LocalDateTime date) {
 		this.date = date;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	public String getCoords() {
@@ -111,14 +113,6 @@ public class Event {
 		this.image = image;
 	}
 
-	public float getRating() {
-		return rating;
-	}
-
-	public void setRating(float rating) {
-		this.rating = rating;
-	}
-
 	public User getUser() {
 		return user;
 	}
@@ -127,14 +121,43 @@ public class Event {
 		this.user = user;
 	}
 
-	@Override
-	public String toString() {
-		return "Event [id=" + id + ", type=" + type + ", fullName=" + fullName + ", date=" + date + ", city=" + city
-				+ ", coords=" + coords + ", description=" + description + ", image=" + image + ", rating=" + rating
-				+ ", user=" + user + "]";
+	public int getTypeId() {
+		return (type != null) ? type.getId() : typeId;
 	}
-	
-	
-	
 
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
+
+	public int getImageId() {
+		return (image != null) ? image.getId() : imageId;
+	}
+
+	public void setImageId(int imageId) {
+		this.imageId = imageId;
+	}
+
+	public int getUserId() {
+		return (user != null) ? user.getId() : userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
+	}
+
+	public City getCity() {
+		return city;
+	}
+
+	public void setCity(City city) {
+		this.city = city;
+	}
+
+	public int getCityId() {
+		return (city != null) ? city.getId() : cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
 }

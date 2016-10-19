@@ -32,22 +32,16 @@ public class EventServiceImpl implements EventService {
 		entity.setDate(event.getDate());
 		entity.setDescription(event.getDescription());
 		entity.setImage(event.getImage());
-		entity.setRating(event.getRating());
 		entity.setTitle(event.getTitle());
 		entity.setType(event.getType());
 		entity.setUser(event.getUser());
-	
-
 	}
 
 	public void deleteEventById(int id) {
 		dao.deleteEventById(id);
-
 	}
 
 	public List<Event> findAllEvent() {
-		
 		return dao.findAllEvent();
 	}
-
 }
