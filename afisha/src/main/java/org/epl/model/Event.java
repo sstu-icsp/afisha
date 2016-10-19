@@ -1,5 +1,7 @@
 package org.epl.model;
 
+import java.awt.Point;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="events")
@@ -17,21 +24,23 @@ public class Event {
 	@Column(name="idEvents")
 	private int id;
 	
-	@ManyToOne
-	@JoinColumn(name="idTypes")
-	private Type type;
+	
 	
 	@Column(name="title")
-	private String fullName;
+	private String title;
 	
-	@Column(name="date")
-	private String date;
+	@DateTimeFormat(pattern="dd/MM/yyyy")
+    @Column(name = "date", nullable = false)
+    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
+    @NotNull
+	private LocalDate data;
 	
-	@Column(name="city")
-	private String city;
+	@ManyToOne
+	@JoinColumn(name="idCities")
+	private City city;
 	
 	@Column(name="coords")
-	private String coords;
+	private Point coords;
 	
 	@Column(name="description")
 	private String description;
@@ -40,99 +49,107 @@ public class Event {
 	@JoinColumn(name="idImages")
 	private Image image;
 	
-	@Column(name="rating")
-	private float rating;
 	
-	@ManyToOne
-	@JoinColumn(name="idUsers")
-	private User user;
+	
+	
+
+
+
+	
+
+
 
 	public int getId() {
 		return id;
 	}
 
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public Type getType() {
-		return type;
+
+
+	
+
+
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setType(Type type) {
-		this.type = type;
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getFullName() {
-		return fullName;
+
+
+	public LocalDate getData() {
+		return data;
 	}
 
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+
+
+	public void setData(LocalDate data) {
+		this.data = data;
 	}
 
-	public String getDate() {
-		return date;
-	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
 
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCoords() {
+	public Point getCoords() {
 		return coords;
 	}
 
-	public void setCoords(String coords) {
+
+
+	public void setCoords(Point coords) {
 		this.coords = coords;
 	}
+
+
 
 	public String getDescription() {
 		return description;
 	}
 
+
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
 
 	public Image getImage() {
 		return image;
 	}
 
+
+
 	public void setImage(Image image) {
 		this.image = image;
 	}
 
-	public float getRating() {
-		return rating;
+
+
+	
+
+
+
+	public City getCity() {
+		return city;
 	}
 
-	public void setRating(float rating) {
-		this.rating = rating;
+
+
+	public void setCity(City city) {
+		this.city = city;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
-	@Override
-	public String toString() {
-		return "Event [id=" + id + ", type=" + type + ", fullName=" + fullName + ", date=" + date + ", city=" + city
-				+ ", coords=" + coords + ", description=" + description + ", image=" + image + ", rating=" + rating
-				+ ", user=" + user + "]";
-	}
+	
 	
 	
 	

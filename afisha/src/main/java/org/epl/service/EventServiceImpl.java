@@ -27,15 +27,13 @@ public class EventServiceImpl implements EventService {
 
 	public void updateEvent(Event event) {
 		Event entity=dao.findById(event.getId());
-		entity.setCity(event.getCity());
 		entity.setCoords(event.getCoords());
-		entity.setDate(event.getDate());
+		entity.setData(event.getData());
 		entity.setDescription(event.getDescription());
 		entity.setImage(event.getImage());
-		entity.setRating(event.getRating());
 		entity.setTitle(event.getTitle());
-		entity.setType(event.getType());
-		entity.setUser(event.getUser());
+		
+		entity.setCity(event.getCity());
 	
 
 	}

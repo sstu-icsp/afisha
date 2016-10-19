@@ -18,7 +18,8 @@ public class IndexController {
 	public String index(ModelMap model)
 	{
 		
-		model.addAttribute("Event", service.findById(1));
+		model.addAttribute("events", service.findAllEvent());
+		//System.out.println(service.findById(1).getTitle());
 		return "index";
 		
 	}

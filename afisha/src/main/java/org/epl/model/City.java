@@ -8,15 +8,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="images")
-public class Image {
+@Table(name="cities")
+public class City 
+{
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	@Column(name="idImages")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="idCities")
 	private int id;
 	
-	@Column(name="pathAddress")
-	private String path;
+	@Column(name="city")
+	private String city;
 
 	public int getId() {
 		return id;
@@ -26,13 +27,15 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getPath() {
-		return path;
+	public String getCity() {
+		return city;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setCity(String city) {
+		this.city = city;
 	}
-
 	
+	
+	
+
 }
