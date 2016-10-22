@@ -1,0 +1,14 @@
+﻿.projectBrand{
+    font-family: 'TomsHandwritten';
+    font-size: 76px;
+}
+
+.rightFilters {
+    border-left: 1px solid black;
+}
+
+/*Убирает выбор столетий в datePicker*/
+.bootstrap-datetimepicker-widget .datepicker-years thead .picker-switch {
+    cursor: default;
+    pointer-events: none;
+}
