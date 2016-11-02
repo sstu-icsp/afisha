@@ -100,7 +100,7 @@
             <c:forEach items="${events}" var="event">
             <div class="col-xs-3">
                 <div class="thumbnail">
-                    <img src="/static/img/default.jpg" alt="EventImg">
+                    <img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg">
                     <div class="caption">
                         <div class="pull-right">
                             <span class="glyphicon glyphicon-star-empty"></span>
