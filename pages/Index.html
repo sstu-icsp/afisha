@@ -7,6 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Afisha</title>
 
+
     <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -17,28 +18,8 @@
     <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
     <script type="text/javascript"
             src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-
-    <style>
-        .event {
-            background: #888;
-            border-radius: 5px;
-        }
-
-        .event {
-            height: 170px;
-            margin-top: 5px;
-        }
-
-        .rightFilters {
-            border-left: 1px solid black;
-        }
-
-        /*Убирает выбор столетий в datePicker*/
-        .bootstrap-datetimepicker-widget .datepicker-years thead .picker-switch {
-            cursor: default;
-            pointer-events: none;
-        }
-    </style>
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/fonts-v3.css">
 </head>
 <body>
 
@@ -47,7 +28,7 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand" href="#">Afisha</a>
+                <a class="navbar-brand projectBrand" href="#">AFISHA</a>
             </li>
         </ul>
         <form class="navbar-form navbar-right authentication" role="form">
@@ -114,8 +95,8 @@
         <hr>
         <H3>Сегодняшние мероприятия, @Today.Date
         </H3>
-        <!-- Конкретное событие -->
         <div class="row-fluid">
+             <!-- Конкретное событие -->
             <div class="col-xs-3">
                 <div class="thumbnail">
                     <img src="img/default.jpg" alt="EventImg">
@@ -170,7 +151,7 @@
                         format: 'DD/MM/YYYY',
                         minDate: minDate,
                         locale: 'ru',
-                        inline: true,
+                        inline: true
                     });
                 });
             </script>
@@ -205,11 +186,11 @@
                 $(function () {
                     $("#datetimepicker10").datetimepicker({
                         format: 'LT',
-                        locale: 'ru',
+                        locale: 'ru'
                     });
                     $("#datetimepicker11").datetimepicker({
                         format: 'LT',
-                        locale: 'ru',
+                        locale: 'ru'
                     });
                 });
             </script>
@@ -228,6 +209,5 @@
 </div>
 
 
-</div>
 </body>
 </html>
