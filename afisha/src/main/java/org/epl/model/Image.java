@@ -16,7 +16,7 @@ public class Image {
 	private int id;
 	
 	@Column(name="pathAddress")
-	private String path;
+	private byte[] image;
 
 	public int getId() {
 		return id;
@@ -26,13 +26,17 @@ public class Image {
 		this.id = id;
 	}
 
-	public String getPath() {
-		return path;
+	public byte[] getImage() {
+		return image;
 	}
 
-	public void setPath(String path) {
-		this.path = path;
+	public void setImage(byte[] image) {
+		this.image = image;
 	}
+
+	
+
+	
 
 	
 }

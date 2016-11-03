@@ -2,6 +2,7 @@ package org.epl.controller;
 
 import java.util.List;
 
+import org.epl.dao.ImageDao;
 import org.epl.model.Event;
 import org.epl.service.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 	@Autowired
 	private EventService service;
+	
 	
 	@RequestMapping(value={"/","/event","/event/list"})
 	public String index(ModelMap model)
