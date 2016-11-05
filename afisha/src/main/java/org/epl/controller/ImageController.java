@@ -24,7 +24,7 @@ public class ImageController {
 		model.addAttribute("image", service.findById(1).getId());
 		return "image";
 	}
-	
+
 	@RequestMapping("/image")
 	public void image(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
@@ -45,7 +45,7 @@ public class ImageController {
 		    if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
 		}
 	}
-		
+
 	
 	
 	
