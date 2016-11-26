@@ -12,10 +12,10 @@
     <title>Afisha</title>
 
     <!-- Bootstrap -->
-    <script type="text/javascript" src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
-    <script type="text/javascript" src="<c:url value='/static/js/moment-with-locales.min.js' />"></script>
-    <script type="text/javascript" src="<c:url value='/static/js/bootstrap.min.js' />"></script>
-    <script type="text/javascript" src="<c:url value='/static/js/bootstrap-datetimepicker.js' />"></script>
+    <script typeOfEvents="text/javascript" src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
+    <script typeOfEvents="text/javascript" src="<c:url value='/static/js/moment-with-locales.min.js' />"></script>
+    <script typeOfEvents="text/javascript" src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+    <script typeOfEvents="text/javascript" src="<c:url value='/static/js/bootstrap-datetimepicker.js' />"></script>
     <link rel="stylesheet" href="<c:url value='/static/css/bootstrap.min.css' />">
     <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-datetimepicker.min.css' />">
     <link rel="stylesheet" href="<c:url value='/static/css/index.css' />">
@@ -33,13 +33,13 @@
         </ul>
         <form class="navbar-form navbar-right authentication" role="form">
             <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
+                <input typeOfEvents="text" placeholder="Email" class="form-control">
             </div>
             <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
+                <input typeOfEvents="password" placeholder="Password" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success">Войти</button>
-            <button type="button" class="btn btn-warning">Регистрация</button>
+            <button typeOfEvents="submit" class="btn btn-success">Войти</button>
+            <button typeOfEvents="button" class="btn btn-warning">Регистрация</button>
         </form>
     </div>
 </div>
@@ -52,28 +52,28 @@
                 <div class="btn-group" id="genreTypesButton">
                     <ul class="nav nav-justified">
                         <li>
-                            <button type="button" class="btn btn-default">Фильмы</button>
+                            <button typeOfEvents="button" class="btn btn-default">Фильмы</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default">Концерты</button>
+                            <button typeOfEvents="button" class="btn btn-default">Концерты</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default">Шоу</button>
+                            <button typeOfEvents="button" class="btn btn-default">Шоу</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default">Хобби</button>
+                            <button typeOfEvents="button" class="btn btn-default">Хобби</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default">Спорт</button>
+                            <button typeOfEvents="button" class="btn btn-default">Спорт</button>
                         </li>
                         <li>
-                            <button type="button" class="btn btn-default">Театр</button>
+                            <button typeOfEvents="button" class="btn btn-default">Театр</button>
                         </li>
                     </ul>
                 </div>
 
                 <!--В будущем этот скрипт будет фильтровать события при клике-->
-                <script type="text/javascript">
+                <script typeOfEvents="text/javascript">
                     $(document).ready(function () {
                         $("#genreTypesButton .btn").click(function () {
                             $("#genreTypesButton .btn.active").button('toggle')
@@ -85,9 +85,9 @@
             <div class="col-xs-4">
                 <form class="form-inline pull-right" role="search">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Поиск">
+                        <input typeOfEvents="text" class="form-control" placeholder="Поиск">
                     </div>
-                    <button type="submit" class="btn btn-default">Поиск</button>
+                    <button typeOfEvents="submit" class="btn btn-default">Поиск</button>
                 </form>
             </div>
         </div>
@@ -126,7 +126,7 @@
         <div class="cityChoosing ">
             <h2 class="text-center">Город</h2>
             <div class="col-xs-8 col-xs-offset-2 ">
-                <button type="button" class="btn btn-default  btn-block dropdown-toggle" data-toggle="dropdown">
+                <button typeOfEvents="button" class="btn btn-default  btn-block dropdown-toggle" data-toggle="dropdown">
                     Выберите город
                     <span class="caret"></span>
                 </button>
@@ -146,7 +146,7 @@
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
+            <script typeOfEvents="text/javascript">
                 $(function () {
                     var minDate = new Date();
                     //Когда будут работать запросы из БД, минимальную дату в календаре можно изменить на дату самого раннего на данный момент события
@@ -168,7 +168,7 @@
                 <p class="text-center">От</p>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker10">
-                        <input type="text" class="form-control"/>
+                        <input typeOfEvents="text" class="form-control"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
@@ -179,14 +179,14 @@
                 <p class="text-center">До</p>
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker11">
-                        <input type="text" class="form-control"/>
+                        <input typeOfEvents="text" class="form-control"/>
                             <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                     </div>
                 </div>
             </div>
-            <script type="text/javascript">
+            <script typeOfEvents="text/javascript">
                 $(function () {
                     $("#datetimepicker10").datetimepicker({
                         format: 'LT',
@@ -204,7 +204,7 @@
         <div class="removeFilters">
             <div class="row-fluid">
                 <div class="col-xs-6 col-xs-offset-3 ">
-                    <button type="button" class="btn btn-default">Сбросить фильтры</button>
+                    <button typeOfEvents="button" class="btn btn-default">Сбросить фильтры</button>
                 </div>
             </div>
         </div>

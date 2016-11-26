@@ -2,20 +2,20 @@ package org.epl.dao;
 
 import java.util.List;
 
-import org.epl.model.Type;
+import org.epl.model.TypeOfEvents;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class TypeDaoImpl extends AbstractDao<Integer, Type> implements TypeDao {
+public class TypeDaoImpl extends AbstractDao<Integer, TypeOfEvents> implements TypeDao {
 
-	public Type findById(int id) {
+	public TypeOfEvents findById(int id) {
 	return	getByKey(id);
 		
 	}
 
-	public void saveType(Type type) {
-		persist(type);
+	public void saveType(TypeOfEvents typeOfEvents) {
+		persist(typeOfEvents);
 
 	}
 
@@ -25,9 +25,9 @@ public class TypeDaoImpl extends AbstractDao<Integer, Type> implements TypeDao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Type> findAllType() {
+	public List<TypeOfEvents> findAllType() {
 		Criteria criteria=createEntityCriteria();
-		return (List <Type>) criteria.list();
+		return (List <TypeOfEvents>) criteria.list();
 	}
 
 }

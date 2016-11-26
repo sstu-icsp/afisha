@@ -22,6 +22,7 @@ public class ImageDaoImpl extends AbstractDao<Integer, Image> implements ImageDa
 		delete(findById(id));
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Image> findAllImages() {
 		Criteria criteria=createEntityCriteria();
 		return (List <Image>) criteria.list();

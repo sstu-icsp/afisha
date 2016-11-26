@@ -22,9 +22,7 @@ $(document).ready(function () {
         $('#eventDateInput')[0].value = e.date;
     });
 
-    if (imageInput.files.length != 0) {
-        $("#eventImage")[0].src = window.URL.createObjectURL(imageInput.files);
-    }
+
     $('#eventDateInput')[0].value = new Date();
 });
 

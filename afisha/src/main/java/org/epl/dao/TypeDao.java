@@ -2,11 +2,11 @@ package org.epl.dao;
 
 import java.util.List;
 
-import org.epl.model.Type;
+import org.epl.model.TypeOfEvents;
 
 public interface TypeDao {
-	Type findById(int id);
-	void saveType(Type type);
+	TypeOfEvents findById(int id);
+	void saveType(TypeOfEvents typeOfEvents);
 	void deleteTypeById(int id);
-	List <Type> findAllType();
+	List <TypeOfEvents> findAllType();
 }

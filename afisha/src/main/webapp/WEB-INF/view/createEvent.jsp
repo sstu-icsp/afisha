@@ -2,6 +2,8 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -28,7 +30,7 @@
     <link rel="stylesheet" href="<c:url value='/static/css/fonts-v3.css' />">
 
     <!--YandexMaps-->
-    <script src="<c:url value='https://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript' />"></script>
+    <script src="<c:url value='https://api-maps.yandex.ru/2.1/?lang=ru_RU" typeOfEvents="text/javascript' />"></script>
     <script src="<c:url value='/static/js/yandexMapsApi.js' />"></script>
 
     <script type="text/javascript" src="<c:url value='/static/js/createEvent.js' />"></script>
@@ -43,6 +45,9 @@
 
         #eventImage {
             height: 236px;
+        }
+        .error{
+            color: red;
         }
 
 
@@ -73,7 +78,7 @@
 <!--Content-->
 <div class="container-fluid">
     <div class="row-fluid addEventMain">
-        <form class="form-horizontal col-xs-offset-3" id="form" method="post" action="/createEvent">
+        <form:form commandName="eventForm" class="form-horizontal col-xs-offset-3" id="form" method="post" action="createEvent">
 
             <div class="form-group">
                 <!--Image-->
@@ -82,7 +87,7 @@
                         <img id="eventImage" class="img-responsive"/>
                     </div>
                     <div class="pull-right">
-                        <input type="file" class="filestyle" id="imageInput" accept="image/jpeg" name="image">
+                        <input type="file" formtarget="form" class="filestyle" id="imageInput" accept="image/jpeg" name="image">
                     </div>
                 </div>
                 <script>
@@ -93,46 +98,47 @@
                 <div class="col-xs-6 col-xs-offset-1">
                     <!--Title-->
                     <div class="form-group">
-                        <input type="text" id="eventTitleInput" class="form-control"
-                               placeholder="Введите название события" name="title" maxlength="45">
+                        <form:errors class="error" path="title"/>
+                        <form:input path="title" id="eventTitleInput" class="form-control"
+                               placeholder="Введите название события" name="title" maxlength="45"/>
                     </div>
-                    <!--Type-->
+                    <!--TypeOfEvents-->
                     <div class="form-group">
-                        <label for="eventTypeSelect">Выберите тип события</label>
-                        <select class="form-control" id="eventTypeSelect" name="type">
-                            <c:forEach items="${types}" var="type">
-                                <option>${type.title}</option>
+                        <form:label path="type" for="eventTypeSelect">Выберите тип события</form:label>
+                        <form:select path="type" class="form-control" id="eventTypeSelect" name="typeOfEvents">
+                            <c:forEach items="${types}" var="typeOfEvents">
+                                <form:option value="${typeOfEvents.title}"/>
                             </c:forEach>
-                        </select>
+                        </form:select>
                     </div>
                     <!--Date-->
                     <div class="form-group">
                         <div class="row">
                             <div class="col-xs-12">
-                                <input type="hidden" id="eventDateInput" name="date">
+                                <form:hidden path="data" id="eventDateInput" name="date"/>
                                 <div id="datetimepicker"></div>
                             </div>
                         </div>
                     </div>
                     <!--Description-->
                     <div class="form-group">
-                        <label for="eventDescriptionInput">Краткое описание</label>
-                        <textarea class="form-control noresize" rows="4" name="description"
-                                  placeholder="Введите краткое описание события" id="eventDescriptionInput"> </textarea>
+                        <form:label path="description" for="eventDescriptionInput">Краткое описание</form:label>
+                        <form:textarea path="description" class="form-control noresize" rows="4" name="description"
+                                  placeholder="Введите краткое описание события" id="eventDescriptionInput"/>
                     </div>
                     <!--City-->
                     <div class="form-group">
                         <label for="eventTypeSelect">Выберите город</label>
-                        <select class="form-control" id="eventCitySelect" name="city">
+                        <form:select path="city" class="form-control" id="eventCitySelect" name="city">
                             <c:forEach items="${cities}" var="city">
-                                <option>${city.city}</option>
+                                <form:option value="${city.city}"/>
                             </c:forEach>
-                        </select>
+                        </form:select>
                     </div>
                     <!--Coords-->
                     <div class="mapChoose">
                         <div class="form-group">
-                            <input type="hidden" id="mapCoordsInput" name="coords">
+                            <form:hidden path="coords" id="mapCoordsInput" name="coords"/>
                             <label>Выберите точку на карте,где будет проводиться событие</label>
                         </div>
                         <div id="map" class="form-group" style="width: 600px; height: 400px"></div>
@@ -143,7 +149,7 @@
                     </div>
                 </div>
             </div>
-        </form>
+        </form:form>
     </div>
 </div>
 

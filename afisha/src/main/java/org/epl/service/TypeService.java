@@ -2,12 +2,12 @@ package org.epl.service;
 
 import java.util.List;
 
-import org.epl.model.Type;
+import org.epl.model.TypeOfEvents;
 
 public interface TypeService {
-    Type findById(int id);
-    void saveType(Type type);
-    void updateType(Type type);
+    TypeOfEvents findById(int id);
+    void saveType(TypeOfEvents typeOfEvents);
+    void updateType(TypeOfEvents typeOfEvents);
     void deleteTypeById(int id);
-    List <Type> findAllType();
+    List <TypeOfEvents> findAllType();
 }
