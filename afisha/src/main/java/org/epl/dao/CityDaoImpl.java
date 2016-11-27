@@ -10,18 +10,15 @@ import java.util.List;
 public class CityDaoImpl extends AbstractDao<Integer, City> implements CityDao {
 
 	public City findById(int id) {
-	return	getByKey(id);
-		
+		return	getByKey(id);
 	}
 
 	public void saveCity(City city) {
 		persist(city);
-
 	}
 
 	public void deleteCityById(int id) {
 		delete(findById(id));
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -29,5 +26,4 @@ public class CityDaoImpl extends AbstractDao<Integer, City> implements CityDao {
 		Criteria criteria=createEntityCriteria();
 		return (List <City>) criteria.list();
 	}
-
 }

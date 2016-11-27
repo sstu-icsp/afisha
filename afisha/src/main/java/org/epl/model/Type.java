@@ -9,15 +9,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="typesofevents")
-
-public class TypeOfEvents {
+public class Type {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idTypes")
 	private int id;
 	
-	@Column (name="title")
-	private String title;
+	@Column(name="title")
+	private String name;
 
 	public int getId() {
 		return id;
@@ -27,17 +26,11 @@ public class TypeOfEvents {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	
-	
-	
-	
-
 }

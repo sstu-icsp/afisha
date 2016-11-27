@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ImageServiceImpl implements ImageService {
 	@Autowired
 	private ImageDao dao;
+
 	public Image findById(int id) {
-		
 		return dao.findById(id);
 	}
 
@@ -24,18 +24,14 @@ public class ImageServiceImpl implements ImageService {
 
 	public void updateImage(Image image) {
 		Image entity=dao.findById(image.getId());
-		entity.setImage(image.getImage());
-
+		entity.setData(image.getData());
 	}
 
 	public void deleteImageById(int id) {
 		dao.deleteImageById(id);
-
 	}
 
 	public List<Image> findAllImage() {
-		
 		return dao.findAllImages();
 	}
-
 }

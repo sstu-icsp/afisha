@@ -1,6 +1,5 @@
 //ImageInputTooltip, eventTitleInput, DateTimePicker init
 $(document).ready(function () {
-
     $('.bootstrap-filestyle').tooltip({
         trigger: 'manual',
         placement: 'left',
@@ -12,18 +11,6 @@ $(document).ready(function () {
         trigger: 'manual',
         title: "Поле обязательно для заполнения",
     });
-
-    $("#datetimepicker").datetimepicker({
-        locale: 'ru',
-        inline: true,
-        sideBySide: true
-    });
-    $("#datetimepicker").on('dp.change', function (e) {
-        $('#eventDateInput')[0].value = e.date;
-    });
-
-
-    $('#eventDateInput')[0].value = new Date();
 });
 
 //Validation

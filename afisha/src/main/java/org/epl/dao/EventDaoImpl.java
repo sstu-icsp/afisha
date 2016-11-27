@@ -15,7 +15,6 @@ public class EventDaoImpl extends AbstractDao<Integer, Event> implements EventDa
 
 	public void saveEvent(Event event) {
 		persist(event);
-
 	}
 
 	public void deleteEventById(int id) {
@@ -27,5 +26,4 @@ public class EventDaoImpl extends AbstractDao<Integer, Event> implements EventDa
 		Criteria criteria=createEntityCriteria();
 		return (List <Event>) criteria.list();
 	}
-
 }

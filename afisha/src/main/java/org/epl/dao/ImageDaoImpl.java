@@ -10,12 +10,11 @@ import org.springframework.stereotype.Repository;
 public class ImageDaoImpl extends AbstractDao<Integer, Image> implements ImageDao {
 
 	public Image findById(int id) {
-		 return getByKey(id);
+		 return getByKey(id) == null ? getByKey(0) : getByKey(id); // if picture not found, return 'no-pic' image
 	}
 
 	public void saveImage(Image image) {
 		persist(image);
-
 	}
 
 	public void deleteImageById(int id) {
@@ -27,6 +26,4 @@ public class ImageDaoImpl extends AbstractDao<Integer, Image> implements ImageDa
 		Criteria criteria=createEntityCriteria();
 		return (List <Image>) criteria.list();
 	}
-	
-
 }
