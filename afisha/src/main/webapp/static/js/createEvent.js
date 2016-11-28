@@ -1,7 +1,5 @@
-
-//ImageInputTooltip, DateTimePicker init
+//ImageInputTooltip, eventTitleInput, DateTimePicker init
 $(document).ready(function () {
-
     $('.bootstrap-filestyle').tooltip({
         trigger: 'manual',
         placement: 'left',
@@ -9,23 +7,15 @@ $(document).ready(function () {
         html: true
     });
 
-    $("#datetimepicker").datetimepicker({
-        locale: 'ru',
-        inline: true,
-        sideBySide: true
+    $('#eventTitleInput').tooltip({
+        trigger: 'manual',
+        title: "Поле обязательно для заполнения",
     });
-    $("#datetimepicker").on('dp.change', function (e) {
-        $('#eventDateInput')[0].value=e.date;
-    });
-
-    if (imageInput.files.length != 0) {
-        $("#eventImage")[0].src = window.URL.createObjectURL(imageInput.files);
-    }
-    $('#eventDateInput')[0].value=new Date();
 });
 
-//Image Validation 
+//Validation
 $(document).ready(function () {
+    //ImageValidation
     $("#imageInput").change(function () {
         if ($(this)[0].files.length == 0)return;
         // Устанавливаем настройки
@@ -86,5 +76,30 @@ $(document).ready(function () {
             $('.bootstrap-filestyle').tooltip('hide');
         }, 4000);
     });
+
+
+    //TitleValidation
+    var title = $('#eventTitleInput');
+    $('#form').submit(function () {
+
+        if (title[0].value.length === 0) {
+            title.tooltip('show');
+            title.parent('.form-group').addClass('has-error').removeClass('has-success');
+            $('html, body').animate({ scrollTop: $('.container-fluid').offset().top }, 500);
+            return false;
+        }
+        else {
+            title.tooltip('hide');
+            title.parent('.form-group').addClass('has-success').removeClass('has-error');
+            return true;
+        }
+    });
+    $('#form').on('keydown', 'input', function () {
+
+        title.tooltip('hide');
+        title.parent('.form-group').addClass('has-success').removeClass('has-error');
+    })
+
 });
+
 

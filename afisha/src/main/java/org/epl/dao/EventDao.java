@@ -9,5 +9,4 @@ public interface EventDao {
 	void saveEvent(Event event);
 	void deleteEventById(int id);
 	List <Event> findAllEvent();
-
 }

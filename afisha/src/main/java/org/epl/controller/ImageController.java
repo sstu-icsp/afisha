@@ -18,37 +18,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ImageController {
 	@Autowired
 	private ImageService service;
-	@RequestMapping("/im")
-	public String index(ModelMap model)
-	{
-		model.addAttribute("image", service.findById(1).getId());
-		return "image";
-	}
 
 	@RequestMapping("/image")
 	public void image(HttpServletRequest req, HttpServletResponse resp) throws IOException
 	{
-		Image image=service.findById(Integer.parseInt(req.getParameter("id")));
-		System.out.println(image);
+		int imgId = 0; // default 'no-image' pic
+		if (!req.getParameter("id").isEmpty() && req.getParameter("id").matches("^-?\\d+$")) { // check if 'id' parameter is not empty and integer
+			imgId = Integer.parseInt(req.getParameter("id"));
+		}
+
+		Image image = service.findById(imgId);
 		resp.setContentType("image");
-	
-		byte[] bytes=image.getImage();
+		byte[] bytes=image.getData();
 		resp.setContentLength(bytes.length);
 		BufferedOutputStream output = null;
 		try {
-		   
-		    output = new BufferedOutputStream(resp.getOutputStream());
-		  
-		    output.write(bytes);
-		    
+			output = new BufferedOutputStream(resp.getOutputStream());
+			output.write(bytes);
 		} finally {
-		    if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
+			if (output != null) try { output.close(); } catch (IOException logOrIgnore) {}
 		}
 	}
-
-	
-	
-	
-	
-
 }

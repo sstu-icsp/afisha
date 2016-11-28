@@ -1,157 +1,164 @@
 package org.epl.model;
 
-import java.awt.Point;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
-import org.joda.time.LocalDate;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.joda.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="events")
+@Table(name = "events")
 public class Event {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="idEvents")
-	private int id;
-	
-	
-	
-	@Column(name="title")
-	private String title;
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-    @Column(name = "date", nullable = false)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @NotNull
-	private LocalDate data;
-	
-	@ManyToOne
-	@JoinColumn(name="idCities")
-	private City city;
-	
-	@Column(name="coords")
-	private Point coords;
-	
-	@Column(name="description")
-	private String description;
-	
-	@ManyToOne
-	@JoinColumn(name="idImages")
-	private Image image;
-	
-	
-	
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idEvents")
+    private int id;
 
+    @Size(max=45, message = "Неверная длина названия события")
+    @NotEmpty(message = "Название события не может быть пустым")
+    @Column(name = "title")
+    private String title;
 
+    @DateTimeFormat(pattern = "DD-MM-YYYY HH:mm:ss")
+    @Column(name = "date")
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDateTime")
+    private LocalDateTime date;
 
-	
+    @ManyToOne
+    @JoinColumn(name = "idCities")
+    private City city;
 
+    @Transient
+    private int cityId;
 
+    @Column(name = "coords")
+    private String coords;
 
-	public int getId() {
-		return id;
-	}
+    @Column(name = "description")
+    private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "idImages")
+    private Image image;
 
+    @ManyToOne
+    @JoinColumn(name = "idTypes")
+    private org.epl.model.Type type;
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    @Transient
+    private int typeId;
 
+    @ManyToOne
+    @JoinColumn(name = "idUserCreator")
+    private User creator;
 
+    @Transient
+    private int creatorId;
 
-	
+    public LocalDateTime getDate() {
+        return date;
+    }
 
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
 
+    public int getCityId() {
+        return city == null ? cityId : city.getId();
+    }
 
-	public String getTitle() {
-		return title;
-	}
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
+    }
 
+    public org.epl.model.Type getType() {
+        return type;
+    }
 
+    public void setType(org.epl.model.Type type) {
+        this.type = type;
+    }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+    public int getTypeId() {
+        return type == null ? typeId : type.getId();
+    }
 
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
+    }
 
+    public User getCreator() {
+        return creator;
+    }
 
-	public LocalDate getData() {
-		return data;
-	}
+    public void setCreator(User creator) {
+        this.creator = creator;
+    }
 
+    public int getCreatorId() {
+        return creatorId;
+    }
 
+    public void setCreatorId(int creatorId) {
+        this.creatorId = creatorId;
+    }
 
-	public void setData(LocalDate data) {
-		this.data = data;
-	}
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
-	public Point getCoords() {
-		return coords;
-	}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public LocalDateTime getData() {
+        return date;
+    }
 
+    public void setData(LocalDateTime data) {
+        this.date = data;
+    }
 
-	public void setCoords(Point coords) {
-		this.coords = coords;
-	}
+    public String getCoords() {
+        return coords;
+    }
 
+    public void setCoords(String coords) {
+        this.coords = coords;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 
-	public String getDescription() {
-		return description;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
+    public Image getImage() {
+        return image;
+    }
 
+    public void setImage(Image image) {
+        this.image = image;
+    }
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    public City getCity() {
+        return city;
+    }
 
-
-
-	public Image getImage() {
-		return image;
-	}
-
-
-
-	public void setImage(Image image) {
-		this.image = image;
-	}
-
-
-
-	
-
-
-
-	public City getCity() {
-		return city;
-	}
-
-
-
-	public void setCity(City city) {
-		this.city = city;
-	}
-
-	
-	
-	
-	
-
+    public void setCity(City city) {
+        this.city = city;
+    }
 }

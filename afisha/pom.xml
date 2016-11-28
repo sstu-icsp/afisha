@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.1.3.Final</version>
+            <version>5.0.1.Final</version>
         </dependency>
  
         <!-- MySQL -->
@@ -78,7 +78,7 @@
             <version>${joda-time.version}</version>
         </dependency>
          
-        <!-- To map JodaTime with database type -->      
+        <!-- To map JodaTime with database typeOfEvents -->
         <dependency>
             <groupId>org.jadira.usertype</groupId>
             <artifactId>usertype.core</artifactId>
@@ -133,6 +133,11 @@
             <artifactId>dbunit</artifactId>
             <version>${dbunit.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.2</version>
         </dependency>
     </dependencies>
  

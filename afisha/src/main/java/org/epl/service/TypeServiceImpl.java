@@ -15,6 +15,7 @@ public class TypeServiceImpl implements TypeService {
 
     @Autowired
     private TypeDao dao;
+
     public Type findById(int id) {
         return dao.findById(id);
     }
@@ -25,7 +26,7 @@ public class TypeServiceImpl implements TypeService {
 
     public void updateType(Type type) {
         Type entity=dao.findById(type.getId());
-        entity.setTitle(type.getTitle());
+        entity.setName(type.getName());
     }
 
     public void deleteTypeById(int id) {

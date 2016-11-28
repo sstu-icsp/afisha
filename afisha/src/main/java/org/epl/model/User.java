@@ -1,13 +1,6 @@
 package org.epl.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Type;
@@ -43,30 +36,21 @@ public class User {
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @NotNull
 	private LocalDate birthDate;
-	
-	
+
 	@ManyToOne
 	@JoinColumn(name="idCities")
 	private City city;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-    @Column(name = "timeFrom", nullable = false)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @NotNull
-	private LocalDate timeFrom;
-	
-	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-    @Column(name = "timeTo", nullable = false)
-    @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @NotNull
-	private LocalDate timeTo;
-	
-	@Column(name="gender")
-	private int gender;
-	
+	@JoinColumn(name="idGender")
 	@ManyToOne
-	@JoinColumn(name="idImages")
+	@NotNull
+	private Gender gender;
+
+	@Transient
+	private int genderId;
+
+	@JoinColumn(name = "idImages")
+	@ManyToOne
 	private Image image;
 
 	public int getId() {
@@ -125,27 +109,11 @@ public class User {
 		this.city = city;
 	}
 
-	public LocalDate getTimeFrom() {
-		return timeFrom;
-	}
-
-	public void setTimeFrom(LocalDate timeFrom) {
-		this.timeFrom = timeFrom;
-	}
-
-	public LocalDate getTimeTo() {
-		return timeTo;
-	}
-
-	public void setTimeTo(LocalDate timeTo) {
-		this.timeTo = timeTo;
-	}
-
-	public int getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(int gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 
@@ -157,9 +125,11 @@ public class User {
 		this.image = image;
 	}
 
-	
-	
-	
-	
+	public int getGenderId() {
+		return gender == null ?  genderId : gender.getId();
+	}
 
+	public void setGenderId(int genderId) {
+		this.genderId = genderId;
+	}
 }

@@ -9,5 +9,4 @@ public interface ImageDao {
 	void saveImage(Image image);
 	void deleteImageById(int id);
 	List <Image>findAllImages();
-
 }

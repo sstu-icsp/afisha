@@ -14,6 +14,7 @@ public class CityServiceImpl implements CityService {
 
     @Autowired
     private CityDao dao;
+
     public City findById(int id) {
         return dao.findById(id);
     }
@@ -24,7 +25,7 @@ public class CityServiceImpl implements CityService {
 
     public void updateCity(City city) {
         City entity=dao.findById(city.getId());
-        entity.setCity(city.getCity());
+        entity.setName(city.getName());
     }
 
     public void deleteCityById(int id) {

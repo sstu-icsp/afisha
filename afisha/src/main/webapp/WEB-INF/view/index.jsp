@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+         pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -96,30 +96,32 @@
         <H3>Сегодняшние мероприятия, @Today.Date
         </H3>
         <div class="row-fluid">
-             <!-- Конкретное событие -->
+            <!-- Конкретное событие -->
             <c:forEach items="${events}" var="event">
-            <div class="col-xs-3">
-                <div class="thumbnail">
-                    <img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg">
-                    <div class="caption">
-                        <div class="pull-right">
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
-                            <span class="glyphicon glyphicon-star-empty"></span>
+                <div class="col-xs-3">
+                    <div class="thumbnail">
+                        <img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg">
+                        <div class="caption">
+                            <div class="pull-right">
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </div>
+                            <h3>${event.title}</h3>
+                            <h4>${event.city.name}</h4>
                         </div>
-                        <h3>${event.title}</h3>
-                        <h4>${event.city.city}</h4>
                     </div>
                 </div>
-            </div>
             </c:forEach>
             <!-- /Конкретное событие -->
         </div>
     </div>
     <!--Filters-->
     <div class="col-xs-3 rightFilters">
+
+        <a href="<c:url value='/new'/>" class="btn btn-default center-block">Добавить событие</a>
 
         <div class="cityChoosing ">
             <h2 class="text-center">Город</h2>
@@ -167,7 +169,7 @@
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker10">
                         <input type="text" class="form-control"/>
-                            <span class="input-group-addon">
+                        <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                     </div>
@@ -178,7 +180,7 @@
                 <div class="form-group">
                     <div class="input-group date" id="datetimepicker11">
                         <input type="text" class="form-control"/>
-                            <span class="input-group-addon">
+                        <span class="input-group-addon">
                                 <span class="glyphicon glyphicon-time"></span>
                             </span>
                     </div>

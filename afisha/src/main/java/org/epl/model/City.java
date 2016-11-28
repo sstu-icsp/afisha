@@ -9,15 +9,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="cities")
-public class City 
-{
+public class City {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idCities")
 	private int id;
 	
 	@Column(name="city")
-	private String city;
+	private String name;
 
 	public int getId() {
 		return id;
@@ -27,15 +26,11 @@ public class City
 		this.id = id;
 	}
 
-	public String getCity() {
-		return city;
+	public String getName() {
+		return name;
 	}
 
-	public void setCity(String city) {
-		this.city = city;
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	
-	
-
 }
