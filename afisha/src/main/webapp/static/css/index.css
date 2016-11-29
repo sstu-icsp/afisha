@@ -2,7 +2,9 @@
     font-family: 'TomsHandwritten';
     font-size: 76px;
 }
-
+.event{
+    height: 150px;
+}
 .rightFilters {
     border-left: 1px solid black;
 }
