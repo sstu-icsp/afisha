@@ -61,7 +61,9 @@
         .mainContent li {
             pointer-events: none;
         }
-
+        #hellospan {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -74,16 +76,27 @@
                 <a class="navbar-brand projectBrand" href="#">AFISHA</a>
             </li>
         </ul>
-        <form class="navbar-form navbar-right authentication" role="form">
-            <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Войти</button>
-            <button type="button" class="btn btn-warning">Регистрация</button>
-        </form>
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                <div class="navbar-form navbar-right">
+                    <span id="hellospan">Привет, ${pageContext.request.userPrincipal.name}</span>
+                    | <c:url value="login?logout" var="logoutUrl" />
+                    <a href="${logoutUrl}">Выйти</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Войти</button>
+                    <button type="button" class="btn btn-warning">Регистрация</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <!--Content-->

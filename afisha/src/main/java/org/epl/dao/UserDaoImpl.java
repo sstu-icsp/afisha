@@ -13,6 +13,13 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
         return getByKey(id);
     }
 
+    @Override
+    public User findByName(String name) {
+        List<User> result = getSession().createQuery("FROM User u WHERE u.nickname = '"+name+"'").list();
+        if (result.size() > 0) return result.get(0);
+        return null;
+    }
+
     public void saveUser(User user) {
         persist(user);
     }

@@ -20,6 +20,11 @@
     <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-datetimepicker.min.css' />">
     <link rel="stylesheet" href="<c:url value='/static/css/index.css' />">
     <link rel="stylesheet" href="<c:url value='/static/css/fonts-v3.css' />">
+    <style>
+        #hellospan {
+            color: white;
+        }
+    </style>
 </head>
 <body>
 
@@ -31,16 +36,43 @@
                 <a class="navbar-brand projectBrand" href="#">AFISHA</a>
             </li>
         </ul>
-        <form class="navbar-form navbar-right authentication" role="form">
-            <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Войти</button>
-            <button type="button" class="btn btn-warning">Регистрация</button>
-        </form>
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                <div class="navbar-form navbar-right">
+                    <span id="hellospan">Привет, ${pageContext.request.userPrincipal.name}</span>
+                    <c:url value="/logout" var="logoutUrl" />
+                    <!-- csrt for log out-->
+                    <form action="${logoutUrl}" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+                    <script>
+                        function formSubmit() {
+                            document.getElementById("logoutForm").submit();
+                        }
+                    </script>
+                    <a href="javascript:formSubmit()">Выйти</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <c:url value="/login" var="loginUrl" />
+                <form class="navbar-form navbar-right" role="form" name="loginForm" action="${loginUrl}" method="POST">
+                    <c:if test="${param.error != null}">
+                        <div class="alert alert-danger">
+                            <p>Invalid username and password.</p>
+                        </div>
+                    </c:if>
+                    <div class="form-group">
+                        <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Пароль" name="password" class="form-control">
+                    </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-success">Войти</button>
+                    <button type="button" class="btn btn-warning">Регистрация</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <!--Content-->
@@ -100,7 +132,7 @@
             <c:forEach items="${events}" var="event">
                 <div class="col-xs-3">
                     <div class="thumbnail">
-                        <img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg">
+                        <a href="event/${event.id}"><img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg"></a>
                         <div class="caption">
                             <div class="pull-right">
                                 <span class="glyphicon glyphicon-star-empty"></span>
@@ -109,7 +141,7 @@
                                 <span class="glyphicon glyphicon-star-empty"></span>
                                 <span class="glyphicon glyphicon-star-empty"></span>
                             </div>
-                            <h3>${event.title}</h3>
+                            <a href="event/${event.id}"><h3>${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>

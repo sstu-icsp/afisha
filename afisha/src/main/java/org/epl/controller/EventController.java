@@ -29,14 +29,14 @@ public class EventController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(method=RequestMethod.GET, value="/event/{id}")
+    @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
     public String getEvent(@PathVariable int id, ModelMap model) {
         model.addAttribute("types", typeService.findAllType());
         model.addAttribute("event", eventService.findById(id));
         return "event";
     }
 
-    @RequestMapping(value={"/new"}, method = RequestMethod.GET)
+    @RequestMapping(value={"/new/**"}, method = RequestMethod.GET)
     public String newEvent(ModelMap model)
     {
         model.addAttribute("event", new Event());
@@ -45,7 +45,7 @@ public class EventController {
         return "new";
     }
 
-    @RequestMapping(value = {"/new"}, headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
+    @RequestMapping(value = {"/new/**"}, headers = "Content-Type=multipart/form-data", method = RequestMethod.POST)
     public String saveEvent(@RequestParam("eventimg") MultipartFile file, @Valid Event event, BindingResult result, ModelMap model) throws IOException {
         if (result.hasErrors()) {
             model.addAttribute("event", event);
@@ -56,6 +56,7 @@ public class EventController {
 
         if (!file.isEmpty()) {
             Image image = new Image();
+            // todo: image validation
             image.setData(file.getBytes());
             imageService.saveImage(image);
             event.setImage(image);
@@ -63,7 +64,7 @@ public class EventController {
 
         event.setCity(cityService.findById(event.getCityId()));
         event.setType(typeService.findById(event.getTypeId()));
-        event.setCreator(userService.findById(event.getCreatorId()));
+        event.setCreator(userService.findByName(event.getCreatorName()));
         eventService.saveEvent(event);
         return "redirect:/";
     }

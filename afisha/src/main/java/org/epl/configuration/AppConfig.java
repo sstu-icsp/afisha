@@ -18,8 +18,6 @@ import java.io.IOException;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "org.epl")
-
-
 public class AppConfig extends WebMvcConfigurerAdapter {
     @Bean(name="multipartResolver")
     public CommonsMultipartResolver getResolver() throws IOException {

@@ -42,6 +42,9 @@
         .error {
             color:red;
         }
+        #hellospan {
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -54,22 +57,33 @@
                 <a class="navbar-brand projectBrand" href="#">AFISHA</a>
             </li>
         </ul>
-        <form class="navbar-form navbar-right authentication" role="form">
-            <div class="form-group">
-                <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Войти</button>
-            <button type="button" class="btn btn-warning">Регистрация</button>
-        </form>
+        <c:choose>
+            <c:when test="${pageContext.request.userPrincipal.name != null}">
+                <div class="navbar-form navbar-right">
+                    <span id="hellospan">Привет, ${pageContext.request.userPrincipal.name}</span>
+                    | <c:url value="login?logout" var="logoutUrl" />
+                    <a href="${logoutUrl}">Выйти</a>
+                </div>
+            </c:when>
+            <c:otherwise>
+                <form class="navbar-form navbar-right" role="form">
+                    <div class="form-group">
+                        <input type="text" placeholder="Email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-success">Войти</button>
+                    <button type="button" class="btn btn-warning">Регистрация</button>
+                </form>
+            </c:otherwise>
+        </c:choose>
     </div>
 </div>
 <!--Content-->
 <div class="container-fluid">
     <div class="row-fluid addEventMain">
-        <form:form method="POST" id="form" action="/new" modelAttribute="event" cssClass="form-horizontal col-xs-offset-3" enctype="multipart/form-data">
+        <form:form method="POST" id="form" action="/new?${_csrf.parameterName}=${_csrf.token}" modelAttribute="event" cssClass="form-horizontal col-xs-offset-3" enctype="multipart/form-data">
             <div class="form-group">
                 <!--Image-->
                 <div class="col-xs-3">
@@ -135,7 +149,8 @@
                         <div id="map" class="form-group" style="width: 600px; height: 400px"></div>
                     </div>
 
-                    <form:hidden path="creatorId" value="1" />
+                    <form:hidden path="creatorName" value="${pageContext.request.userPrincipal.name}" />
+                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
 
                     <div class="form-group">
                         <form:button type="submit" class="btn btn-default">Создать событие</form:button>

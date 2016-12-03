@@ -56,7 +56,7 @@ public class Event {
     private User creator;
 
     @Transient
-    private int creatorId;
+    private String creatorName;
 
     public LocalDateTime getDate() {
         return date;
@@ -98,12 +98,12 @@ public class Event {
         this.creator = creator;
     }
 
-    public int getCreatorId() {
-        return creatorId;
+    public String getCreatorName() {
+        return creatorName;
     }
 
-    public void setCreatorId(int creatorId) {
-        this.creatorId = creatorId;
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
     }
 
     public int getId() {
