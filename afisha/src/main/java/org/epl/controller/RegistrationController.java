@@ -26,7 +26,6 @@ import java.io.IOException;
 
 @Controller
 public class RegistrationController {
-    private static final Logger log = LogManager.getLogger(RegistrationController.class);
     @Autowired
     ImageService imageService;
     @Autowired

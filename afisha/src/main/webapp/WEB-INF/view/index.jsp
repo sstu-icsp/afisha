@@ -39,7 +39,7 @@
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, ${pageContext.request.userPrincipal.name}</span>
+                    <span id="hellospan">Привет, <a href="profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <c:url value="/logout" var="logoutUrl" />
                     <!-- csrt for log out-->
                     <form action="${logoutUrl}" method="post" id="logoutForm">
