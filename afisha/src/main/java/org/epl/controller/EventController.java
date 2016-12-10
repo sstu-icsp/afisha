@@ -55,11 +55,9 @@ public class EventController {
         }
 
         if (!file.isEmpty()) {
-            Image image = new Image();
-            // todo: image validation
-            image.setData(file.getBytes());
-            imageService.saveImage(image);
-            event.setImage(image);
+            Image img = new Image(file.getBytes());
+            imageService.saveImage(img);
+            event.setImage(img);
         }
 
         event.setCity(cityService.findById(event.getCityId()));

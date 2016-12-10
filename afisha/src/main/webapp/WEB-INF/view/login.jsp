@@ -40,37 +40,36 @@
             <h1> Вход </h1>
             <hr>
         </div>
-        <c:url var="loginUrl" value="/login" />
-        <form name="loginForm" method="post" action="${loginUrl}">
+        <form name="loginForm" method="post" action="login">
             <c:if test="${param.error != null}">
                 <div class="alert alert-danger">
-                    <p>Invalid username and password.</p>
+                    <p>Неправильный логин или пароль</p>
                 </div>
             </c:if>
             <c:if test="${param.logout != null}">
                 <div class="alert alert-success">
-                    <p>You have been logged out successfully.</p>
+                    <p>Вы вышли</p>
                 </div>
             </c:if>
             <div class="form-group">
-                <label for="username"> Логин</label>
+                <label for="username">Логин</label>
                 <input type="text" name="username" id="username" class="form-control">
             </div>
             <div class="form-group">
-                <label for="password"> Пароль</label>
+                <label for="password">Пароль</label>
                 <input type="password" name="password" id="password" class="form-control">
             </div>
             <div class="form-group pull-right">
                 <input type="submit" class="btn btn-success" value="Вход">
-                <input type="button" class="btn btn-warning" value="Забыли пароль?" data-toggle="modal"
-                       data-target="#myModal">
+                <a href="register"><input type="button" class="btn btn-warning" value="Регистрация"></a><%--data-toggle="modal"
+                       data-target="#myModal"--%>
             </div>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
         </form>
     </div>
 </div>
 
-<div id="myModal" class="modal fade">
+<%--<div id="myModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -89,7 +88,7 @@
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+</div><!-- /.modal -->--%>
 
 </body>
 </html>

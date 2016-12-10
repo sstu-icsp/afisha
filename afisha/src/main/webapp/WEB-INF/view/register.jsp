@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿<%@ page language="java" contentType="text/html; charset=utf-8"
+         pageEncoding="utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="utf-8">
@@ -6,23 +11,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title>Afisha</title>
-
-    <script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
-    <script type="text/javascript" src="js/bootstrap-filestyle.min.js"></script>
-
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <!--DateTimePicker -->
-
-    <script type="text/javascript" src="js/moment-with-locales.min.js"></script>
-    <script type="text/javascript"
-            src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
-
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/fonts-v3.css">
-
+    <script type="text/javascript" src="<c:url value='/static/js/jquery-1.11.1.min.js' />"></script>
+    <script type="text/javascript" src="<c:url value='/static/js/bootstrap.min.js' />"></script>
+    <link rel="stylesheet" href="<c:url value='/static/css/bootstrap.min.css' />">
+    <link rel="stylesheet" href="<c:url value='/static/css/bootstrap-datetimepicker.min.css' />">
+    <link rel="stylesheet" href="<c:url value='/static/css/index.css' />">
+    <link rel="stylesheet" href="<c:url value='/static/css/fonts-v3.css' />">
+    <script type="text/javascript" src="<c:url value='/static/js/createEvent.js' />"></script>
+    <style>
+        #eventImage {
+            height: 100px;
+        }
+        .error {
+            color:red;
+        }
+    </style>
 </head>
 <body>
 
@@ -44,36 +47,71 @@
             <h1> Регистрация </h1>
             <hr>
         </div>
-        <form name="registration" method="post">
+        <form:form method="post" id="form" action="register" modelAttribute="user" enctype="multipart/form-data">
+            <!--Image-->
             <div class="form-group">
-                <label for="mail"> Электронный адрес*</label>
-                <input type="email" name="email" id="mail" class="form-control">
+                <div class="eventImg thumbnail">
+                    <img id="eventImage" class="img-responsive"/>
+                </div>
+                <div class="pull-right">
+                    <input type="file" class="filestyle" id="imageInput" accept="image/jpeg" name="userimg">
+                </div>
             </div>
 
             <div class="form-group">
-                <label for="name"> Имя</label>
-                <input type="text" name="name" id="name" class="form-control">
+                <div><form:errors class="error" path="nickName"/></div>
+                <label for="nickName">Логин*</label>
+                <form:input path="nickName" cssClass="form-control" />
             </div>
 
             <div class="form-group">
-                <label for="login"> Логин*</label>
-                <input type="text" name="login" id="login" class="form-control">
+                <div><form:errors class="error" path="password"/></div>
+                <label for="password">Пароль*</label>
+                <form:input type="password" path="password" cssClass="form-control" />
             </div>
 
             <div class="form-group">
-                <label for="password"> Пароль*</label>
-                <input type="password" name="password" id="password" class="form-control">
+                <label for="fullName">Имя</label>
+                <form:input path="fullName" cssClass="form-control" />
             </div>
+
+            <div class="form-group">
+                <div><form:errors class="error" path="birthDate"/></div>
+                <label for="datetimepicker">Дата рождения</label>
+                <div class="input-group" id="datetimepicker">
+                    <form:input path="birthDate" cssClass="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon-calendar glyphicon"></span>
+                    </span>
+                </div>
+                <script src="<c:url value='/static/js/moment-with-locales.min.js' />"></script>
+                <script src="<c:url value='/static/js/bootstrap-datetimepicker.min.js' />"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        var dateNow = new Date();
+                        $('#datetimepicker').datetimepicker({language: 'ru', format: 'DD-MM-YYYY' });
+                    });
+                </script>
+            </div>
+
+            <div class="form-group">
+                <label for="genderId">Пол</label>
+                <form:select path="genderId" items="${genders}" itemLabel="name" itemValue="id" cssClass="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label for="cityId">Город</label>
+                <form:select path="cityId" items="${cities}" itemLabel="name" itemValue="id" cssClass="form-control" />
+            </div>
+
             <div class="form-group pull-right">
-                <input type="submit" class="btn btn-primary" value="Регистрация">
-                <!--Сделать редирект на главную-->
-                <input type="reset" class="btn btn-danger" value="Отмена">
+                <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
             </div>
             <br>
             <br>
             <br>
             <p class="pull-right">*Обязательные поля</p>
-        </form>
+        </form:form>
     </div>
 </div>
 </body>

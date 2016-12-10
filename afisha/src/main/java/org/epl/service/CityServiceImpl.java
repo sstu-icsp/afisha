@@ -36,5 +36,4 @@ public class CityServiceImpl implements CityService {
 
         return dao.findAllCity();
     }
-
 }

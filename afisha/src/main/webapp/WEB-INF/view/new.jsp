@@ -83,7 +83,7 @@
 <!--Content-->
 <div class="container-fluid">
     <div class="row-fluid addEventMain">
-        <form:form method="POST" id="form" action="/new?${_csrf.parameterName}=${_csrf.token}" modelAttribute="event" cssClass="form-horizontal col-xs-offset-3" enctype="multipart/form-data">
+        <form:form method="POST" id="form" action="new" modelAttribute="event" cssClass="form-horizontal col-xs-offset-3" enctype="multipart/form-data">
             <div class="form-group">
                 <!--Image-->
                 <div class="col-xs-3">
@@ -150,7 +150,6 @@
                     </div>
 
                     <form:hidden path="creatorName" value="${pageContext.request.userPrincipal.name}" />
-                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
 
                     <div class="form-group">
                         <form:button type="submit" class="btn btn-default">Создать событие</form:button>

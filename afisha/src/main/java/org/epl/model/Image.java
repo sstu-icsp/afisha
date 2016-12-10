@@ -9,10 +9,17 @@ public class Image {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idImages")
 	private int id;
-	
+
 	@Column(name="img")
 	@Lob
 	private byte[] data;
+
+	public Image() {
+	}
+
+	public Image(byte[] data) {
+		this.data = data;
+	}
 
 	public int getId() {
 		return id;

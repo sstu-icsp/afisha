@@ -2,8 +2,11 @@ package org.epl.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -14,15 +17,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="idUsers")
 	private int id;
-	
-	@NotNull
-	@Column(name="email")
-	private String email;
-	
+
+	@NotEmpty
 	@NotNull
 	@Column(name="nickname")
-	private String nickname;
-	
+	private String nickName;
+
+	@NotEmpty
 	@NotNull
 	@Column(name="password")
 	private String password;
@@ -30,20 +31,24 @@ public class User {
 	@ManyToOne
 	@JoinColumn(name="idRoles")
 	private Role role;
+
+	@Column(name="fullname")
+	private String fullName;
 	
-	@DateTimeFormat(pattern="dd/MM/yyyy")
-    @Column(name = "birthdate", nullable = false)
+	@DateTimeFormat(pattern="DD-MM-YYYY")
+    @Column(name = "birthdate")
     @Type(type="org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @NotNull
 	private LocalDate birthDate;
 
 	@ManyToOne
 	@JoinColumn(name="idCities")
 	private City city;
+
+	@Transient
+	private int cityId;
 	
 	@JoinColumn(name="idGender")
 	@ManyToOne
-	@NotNull
 	private Gender gender;
 
 	@Transient
@@ -61,20 +66,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getNickName() {
+		return nickName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
 	}
 
 	public String getPassword() {
@@ -83,6 +80,14 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getFullName() {
+		return fullName;
+	}
+
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
 	public Role getRole() {
@@ -131,5 +136,13 @@ public class User {
 
 	public void setGenderId(int genderId) {
 		this.genderId = genderId;
+	}
+
+	public int getCityId() {
+		return city == null ? cityId : city.getId();
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
 	}
 }

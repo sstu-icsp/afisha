@@ -2,6 +2,7 @@ package org.epl.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.Type;
@@ -17,8 +18,8 @@ public class Event {
     @Column(name = "idEvents")
     private int id;
 
-    @Size(max=45, message = "Неверная длина названия события")
-    @NotEmpty(message = "Название события не может быть пустым")
+    @NotEmpty
+    @NotNull
     @Column(name = "title")
     private String title;
 
