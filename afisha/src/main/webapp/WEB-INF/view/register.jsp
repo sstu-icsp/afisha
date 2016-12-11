@@ -34,7 +34,7 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="#">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
             </li>
         </ul>
 
@@ -47,7 +47,7 @@
             <h1> Регистрация </h1>
             <hr>
         </div>
-        <form:form method="post" id="form" action="register" modelAttribute="user" enctype="multipart/form-data">
+        <form:form method="post" id="form" action="register?${_csrf.parameterName}=${_csrf.token}" modelAttribute="user" enctype="multipart/form-data">
             <!--Image-->
             <div class="form-group">
                 <div class="eventImg thumbnail">
@@ -103,7 +103,6 @@
                 <label for="cityId">Город</label>
                 <form:select path="cityId" items="${cities}" itemLabel="name" itemValue="id" cssClass="form-control" />
             </div>
-
             <div class="form-group pull-right">
                 <input type="submit" class="btn btn-primary" value="Зарегистрироваться">
             </div>

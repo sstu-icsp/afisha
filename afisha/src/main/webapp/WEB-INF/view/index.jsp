@@ -33,17 +33,16 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="#">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
             </li>
         </ul>
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, <a href="profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
-                    <c:url value="/logout" var="logoutUrl" />
+                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <!-- csrt for log out-->
-                    <form action="${logoutUrl}" method="post" id="logoutForm">
-                        <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+                    <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     </form>
                     <script>
                         function formSubmit() {
@@ -54,14 +53,14 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form" name="loginForm" action="login" method="POST">
+                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
                         <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
-                    <%--<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />--%>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit" class="btn btn-success">Войти</button>
                     <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
                 </form>

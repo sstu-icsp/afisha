@@ -27,7 +27,7 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="#">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
             </li>
         </ul>
 
@@ -59,6 +59,7 @@
                 <label for="password">Пароль</label>
                 <input type="password" name="password" id="password" class="form-control">
             </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="form-group pull-right">
                 <input type="submit" class="btn btn-success" value="Вход">
                 <a href="register"><input type="button" class="btn btn-warning" value="Регистрация"></a><%--data-toggle="modal"

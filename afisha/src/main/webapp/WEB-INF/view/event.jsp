@@ -8,6 +8,8 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
+    <meta name="_csrf" content="${_csrf.token}"/>
+    <meta name="_csrf_header" content="${_csrf.headerName}"/>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -31,6 +33,7 @@
     <!--YandexMaps-->
     <script src="<c:url value='https://api-maps.yandex.ru/2.1/?lang=ru_RU'/>" type="text/javascript"></script>
     <script type="text/javascript" src="<c:url value='/static/js/eventYandexMapsApi.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/static/js/comment.js'/>"></script>
     <style>
 
         .rightFilters {
@@ -64,6 +67,9 @@
         #hellospan {
             color: white;
         }
+        .input-group-addon {
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -73,27 +79,36 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="#">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
             </li>
         </ul>
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, ${pageContext.request.userPrincipal.name}</span>
-                    | <c:url value="login?logout" var="logoutUrl" />
-                    <a href="${logoutUrl}">Выйти</a>
+                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
+                    <!-- csrt for log out-->
+                    <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    </form>
+                    <script>
+                        function formSubmit() {
+                            document.getElementById("logoutForm").submit();
+                        }
+                    </script>
+                    <a href="javascript:formSubmit()">Выйти</a>
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form">
+                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
-                        <input type="text" placeholder="Email" class="form-control">
+                        <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
-                        <input type="password" placeholder="Password" class="form-control">
+                        <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <button type="button" class="btn btn-warning">Регистрация</button>
+                    <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
                 </form>
             </c:otherwise>
         </c:choose>
@@ -178,22 +193,41 @@
                     </script>
                 </div>
             </c:if>
+
             <div class="row">
                 <div class="col-xs-12">
-                    <h3>Комментарии</h3>
-                    <form class="form-group">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Введите ваш комментарий">
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-comment"></span>
-                            </span>
-                        </div>
-                    </form>
+                    <c:choose>
+                        <c:when test="${user != null}">
+                            <h3>Оставьте комментарий</h3>
+                            <form class="form-group">
+                                <div class="input-group">
+                                    <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий">
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-comment"></span>
+                                    </span>
+                                </div>
+                                <input type="hidden" id="eventId" value="${event.id}" />
+                                <input type="hidden" id="userCreator" value="${user.nickName}" />
+                                <input type="hidden" id="userPic" value="${user.image.id}" />
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <span>Авторизуйтесь чтобы оставить комментарий</span>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
+
             <div class="row">
-                <div class="col-xs-12">
-                    Комментарии
+                <div class="col-xs-12" id="comments_block">
+                    Комментарии <!-- Надо сверстать по-нормальному -->
+                    <c:forEach items="${comments}" var="comment">
+                        <div style="border: 1px solid black">
+                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">${comment.user.nickName}</a>
+                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}"><img src="<c:url value='/image?id=${comment.user.image.id}' />" alt="userImg"></a>
+                            <span>${comment.comment}</span>
+                        </div>
+                    </c:forEach>
                 </div>
             </div>
         </div>

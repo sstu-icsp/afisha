@@ -2,12 +2,12 @@ package org.epl.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
 
 import org.epl.dao.EventDao;
 import org.epl.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
@@ -38,7 +38,6 @@ public class EventServiceImpl implements EventService {
 	}
 
 	public List<Event> findAllEvent() {
-		
 		return dao.findAllEvent();
 	}
 

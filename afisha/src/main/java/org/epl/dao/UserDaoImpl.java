@@ -14,6 +14,7 @@ public class UserDaoImpl extends AbstractDao<Integer, User> implements UserDao {
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public User findByName(String name) {
         List<User> result = getSession().createQuery("FROM User u WHERE u.nickName = '"+name+"'").list();
         if (result.size() > 0) return result.get(0);

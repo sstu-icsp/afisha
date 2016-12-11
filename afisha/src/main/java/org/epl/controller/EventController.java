@@ -2,8 +2,12 @@ package org.epl.controller;
 
 import org.epl.model.Event;
 import org.epl.model.Image;
+import org.epl.model.User;
 import org.epl.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -28,11 +32,22 @@ public class EventController {
     private ImageService imageService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommentService commentService;
 
     @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
     public String getEvent(@PathVariable int id, ModelMap model) {
         model.addAttribute("types", typeService.findAllType());
         model.addAttribute("event", eventService.findById(id));
+        model.addAttribute("comments", commentService.findCommentsByEvent(id));
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println("gsdg" + auth.getName());
+        if (!(auth instanceof AnonymousAuthenticationToken)) {
+            User user = userService.findByName(auth.getName());
+            model.addAttribute("user", user);
+            System.out.println(user.getNickName());
+        }
         return "event";
     }
 
