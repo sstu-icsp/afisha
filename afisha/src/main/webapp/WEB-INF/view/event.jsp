@@ -44,10 +44,6 @@
             border-right: 1px solid black;
         }
 
-        #eventImage {
-            height: 236px;
-        }
-
         .eventRating {
             font-size: 25px;
         }
@@ -64,9 +60,11 @@
         .mainContent li {
             pointer-events: none;
         }
+
         #hellospan {
             color: white;
         }
+
         .input-group-addon {
             cursor: pointer;
         }
@@ -79,16 +77,17 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>/">AFISHA</a>
             </li>
         </ul>
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
+                    <span id="hellospan">Привет, <a
+                            href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <!-- csrt for log out-->
                     <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
                     <script>
                         function formSubmit() {
@@ -99,16 +98,19 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
+                <form class="navbar-form navbar-right" role="form" name="loginForm"
+                      action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
                         <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
+                    <a href="register">
+                        <button type="button" class="btn btn-warning">Регистрация</button>
+                    </a>
                 </form>
             </c:otherwise>
         </c:choose>
@@ -201,14 +203,15 @@
                             <h3>Оставьте комментарий</h3>
                             <form class="form-group">
                                 <div class="input-group">
-                                    <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий">
-                                    <span class="input-group-addon">
+                                    <input type="text" id="comment" class="form-control"
+                                           placeholder="Введите ваш комментарий" required>
+                                    <span class="input-group-addon" id="sendComment">
                                         <span class="glyphicon glyphicon-comment"></span>
                                     </span>
                                 </div>
-                                <input type="hidden" id="eventId" value="${event.id}" />
-                                <input type="hidden" id="userCreator" value="${user.nickName}" />
-                                <input type="hidden" id="userPic" value="${user.image.id}" />
+                                <input type="hidden" id="eventId" value="${event.id}"/>
+                                <input type="hidden" id="userCreator" value="${user.nickName}"/>
+                                <input type="hidden" id="userPic" value="${user.image.id}"/>
                             </form>
                         </c:when>
                         <c:otherwise>
@@ -220,12 +223,16 @@
 
             <div class="row">
                 <div class="col-xs-12" id="comments_block">
-                    Комментарии <!-- Надо сверстать по-нормальному -->
                     <c:forEach items="${comments}" var="comment">
-                        <div style="border: 1px solid black">
-                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">${comment.user.nickName}</a>
-                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}"><img src="<c:url value='/image?id=${comment.user.image.id}' />" alt="userImg"></a>
-                            <span>${comment.comment}</span>
+                        <div class="media">
+                            <a class="pull-left" href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">
+                                <img class="media-object" src="<c:url value='/image?id=${comment.user.image.id}' />"
+                                     alt="${comment.user.nickName}" width="100px" height="64px">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">${comment.user.nickName}</h4>
+                                    ${comment.comment}
+                            </div>
                         </div>
                     </c:forEach>
                 </div>

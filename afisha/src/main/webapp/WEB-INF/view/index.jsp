@@ -39,10 +39,11 @@
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
+                    <span id="hellospan">Привет, <a
+                            href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <!-- csrt for log out-->
                     <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     </form>
                     <script>
                         function formSubmit() {
@@ -53,16 +54,19 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
+                <form class="navbar-form navbar-right" role="form" name="loginForm"
+                      action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
                         <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
+                    <a href="register">
+                        <button type="button" class="btn btn-warning">Регистрация</button>
+                    </a>
                 </form>
             </c:otherwise>
         </c:choose>
@@ -118,14 +122,17 @@
         </div>
         <div class="clearfix"></div>
         <hr>
-        <H3>Сегодняшние мероприятия, @Today.Date
+        <H3>Сегодняшние мероприятия,<%= new java.util.Date() %>
         </H3>
         <div class="row-fluid">
             <!-- Конкретное событие -->
             <c:forEach items="${events}" var="event">
                 <div class="col-xs-3">
                     <div class="thumbnail">
-                        <a href="event/${event.id}"><img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg"></a>
+                        <a href="event/${event.id}">
+                            <img class="img-responsive eventImage" src="<c:url value='/image?id=${event.image.id}' />"
+                                 alt="EventImg">
+                        </a>
                         <div class="caption">
                             <div class="pull-right">
                                 <span class="glyphicon glyphicon-star-empty"></span>
@@ -134,7 +141,7 @@
                                 <span class="glyphicon glyphicon-star-empty"></span>
                                 <span class="glyphicon glyphicon-star-empty"></span>
                             </div>
-                            <a href="event/${event.id}"><h3>${event.title}</h3></a>
+                            <a href="event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>

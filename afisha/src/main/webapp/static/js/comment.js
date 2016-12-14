@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(".input-group-addon").click(function () {
+    $("#sendComment").click(function () {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         var eventId = $('#eventId').val();
@@ -9,7 +9,7 @@ $(document).ready(function () {
 
         $.ajax({
             type: "POST",
-            url: "/afisha/new_comment",
+            url: "/Afisha/new_comment",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader(header, token);
             },
@@ -19,12 +19,18 @@ $(document).ready(function () {
                 comment : comment
             },
             success: function(result) {
-                $("#comments_block").append('<div style="border: 1px solid black">' +
-                    '<a href="/afisha/profile/"'+ userCreator +'>'+userCreator+'</a>' +
-                    '<a href="/afisha/profile/"'+ userCreator +'><img src="/afisha/image?id="'+ userPic +' /></a>' +
-                    '<span>' + comment +'</span>' +
-                '</div>'); // addcomment
-                $(".input-group-addon").val(""); // clear comment input
+                $("#comments_block").append(
+                '<div class="media">'+
+                    '<a class="pull-left" href="/Afisha/profile/'+ userCreator +'">'+
+                        '<img class="media-object" src="/Afisha/image?id='+ userPic +
+                                    '" alt="'+userCreator+'" width="100px" height="64px"/>'+
+                    '</a>'+
+                    '<div class="media-body">'+
+                    '<h4 class="media-heading">'+userCreator+'</h4>'+
+                    comment+
+                    '</div>'+
+                '</div>');
+                $("#comment").val(""); // clear comment input
             },
             error: function(jqXHR) {
                 console.log(jqXHR.responseText);

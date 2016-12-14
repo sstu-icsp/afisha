@@ -2,8 +2,11 @@
     font-family: 'TomsHandwritten';
     font-size: 76px;
 }
-.event{
-    height: 150px;
+.eventImage{
+    height: 150px !important;
+}
+.eventTitle{
+    overflow: hidden;
 }
 .rightFilters {
     border-left: 1px solid black;

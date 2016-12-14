@@ -36,9 +36,7 @@
             resize: none
         }
 
-        #eventImage {
-            height: 236px;
-        }
+
         .error {
             color:red;
         }
@@ -54,7 +52,7 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>/">AFISHA</a>
             </li>
         </ul>
         <c:choose>
