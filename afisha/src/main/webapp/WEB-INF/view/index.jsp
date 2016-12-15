@@ -108,9 +108,9 @@
                 </script>
             </div>
             <div class="col-xs-4">
-                <form class="form-inline pull-right" role="search">
+                <form class="form-inline pull-right" role="search" action="<c:url value='/search'/>" method="get">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Поиск">
+                        <input type="text" class="form-control" placeholder="Поиск" name="param">
                     </div>
                     <button type="submit" class="btn btn-default">Поиск</button>
                 </form>

@@ -1,7 +1,9 @@
 package org.epl.dao;
 
+import java.util.Date;
 import java.util.List;
 
+import org.epl.model.Comment;
 import org.epl.model.Event;
 import org.hibernate.Criteria;
 import org.springframework.stereotype.Repository;
@@ -25,5 +27,18 @@ public class EventDaoImpl extends AbstractDao<Integer, Event> implements EventDa
 	public List<Event> findAllEvent() {
 		Criteria criteria=createEntityCriteria();
 		return (List <Event>) criteria.list();
+	}
+	@Override
+	public List<Event> findByTitle(String title)
+	{
+
+		return (List<Event>)getSession().createQuery("FROM Event c WHERE c.title = " + title).list();
+
+	}
+	@Override
+	public List<Event> findByDate(Date date)
+	{
+		return null;
+		//return (List<Event>)getSession().createQuery("FROM Event c WHERE c.date="+date).list();
 	}
 }

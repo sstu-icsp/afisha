@@ -28,7 +28,6 @@ public class EventServiceImpl implements EventService {
 		entity.setCoords(event.getCoords());
 		entity.setData(event.getData());
 		entity.setDescription(event.getDescription());
-		entity.setImage(event.getImage());
 		entity.setTitle(event.getTitle());
 		entity.setCity(event.getCity());
 	}
@@ -41,4 +40,8 @@ public class EventServiceImpl implements EventService {
 		return dao.findAllEvent();
 	}
 
+	@Override
+	public List<Event> searchEvent(String text) {
+		return null;
+	}
 }
