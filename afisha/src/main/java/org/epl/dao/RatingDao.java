@@ -11,4 +11,5 @@ public interface RatingDao {
     List<Rating> findAllRatings();
     List<Rating> findRatingsByUser(int userId);
     List<Rating> findRatingsByEvent(int eventId);
+    Rating findRatingsByUserEvent(int eventId, String userName);
 }

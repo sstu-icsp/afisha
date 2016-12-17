@@ -52,4 +52,11 @@ public class RatingServiceImpl implements RatingService {
     public List<Rating> findRatingsByEvent(int eventId) {
         return dao.findRatingsByEvent(eventId);
     }
+
+    @Override
+    public Rating findRatingsByUserEvent(int eventId, String userName) {
+        return dao.findRatingsByUserEvent(eventId, userName);
+    }
+
+
 }

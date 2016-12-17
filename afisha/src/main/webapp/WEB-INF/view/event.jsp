@@ -34,17 +34,20 @@
     <script src="<c:url value='https://api-maps.yandex.ru/2.1/?lang=ru_RU'/>" type="text/javascript"></script>
     <script type="text/javascript" src="<c:url value='/static/js/eventYandexMapsApi.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/static/js/comment.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/static/js/rating.js'/>"></script>
     <style>
 
         .rightFilters {
             border: none
         }
 
+        #deleteRating{
+            cursor: pointer;}
         .mainContent {
             border-right: 1px solid black;
         }
 
-        .eventRating {
+        .eventRating .glyphicon {
             font-size: 25px;
         }
 
@@ -158,13 +161,39 @@
                 <div class="col-xs-8">
                     <h1>${event.title}</h1>
                 </div>
+                <script>
+                    var eventRating=${event.rating}
+                    $(document).ready(function () {
+
+                        $('.glyphicon').mouseover(function () {
+                            $('.glyphicon').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                            for(i=1;i<=$(this).data("rating");i++){
+                                $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+                            }
+                        })
+                        $('.glyphicon').mouseout(function () {
+                            $('.glyphicon').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                            for(i=1;i<=eventRating;i++){
+                                $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
+                            }
+                        })
+                    });
+
+                </script>
                 <div class="eventRating col-xs-4">
                     <div class="pull-right">
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <c:forEach var="i" begin="1" end="${event.rating}">
+                            <span class="glyphicon glyphicon-star" data-rating="${i}"></span>
+                        </c:forEach>
+                        <c:forEach var="i" begin="${event.rating+1}" end="5">
+                            <span class="glyphicon glyphicon-star-empty" data-rating="${i}"></span>
+                        </c:forEach>
+                    </div>
+                    <div class="pull-right" id="userRating">
+                        <c:if test="${pageContext.request.userPrincipal.name != null&&event.userRating!=0}">
+                            <span>Ваша оценка: <b>${event.userRating}</b></span><br>
+                            <a id='deleteRating'>Удалить оценку </a>
+                        </c:if>
                     </div>
                 </div>
             </div>

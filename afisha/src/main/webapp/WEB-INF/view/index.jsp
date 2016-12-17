@@ -135,19 +135,20 @@
                         </a>
                         <div class="caption">
                             <div class="pull-right">
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
-                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <c:forEach var="i" begin="1" end="${event.rating}">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                </c:forEach>
+                                <c:forEach var="i" begin="${event.rating}" end="4">
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                </c:forEach>
                             </div>
                             <a href="event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>
                 </div>
-            </c:forEach>
-            <!-- /Конкретное событие -->
+                </c:forEach>
+                <!-- /Конкретное событие -->
         </div>
     </div>
     <!--Filters-->

@@ -1,5 +1,6 @@
 package org.epl.dao;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 import org.epl.model.Rating;
 import org.hibernate.Criteria;
@@ -7,11 +8,11 @@ import org.hibernate.Criteria;
 import java.util.List;
 
 @Repository
-public class RatingDaoImpl extends AbstractDao<Integer, Rating>  implements RatingDao {
+public class RatingDaoImpl extends AbstractDao<Integer, Rating> implements RatingDao {
 
     @Override
     public Rating findById(int id) {
-        return findById(id);
+        return getByKey(id);
     }
 
     @Override
@@ -26,19 +27,28 @@ public class RatingDaoImpl extends AbstractDao<Integer, Rating>  implements Rati
 
     @Override
     public List<Rating> findAllRatings() {
-        Criteria criteria=createEntityCriteria();
-        return (List <Rating>) criteria.list();
+        Criteria criteria = createEntityCriteria();
+        return (List<Rating>) criteria.list();
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Rating> findRatingsByUser(int userId) {
-        return (List<Rating>)getSession().createQuery("FROM Rating r WHERE r.user.id = " + Integer.toString(userId));
+        return (List<Rating>) getSession().createQuery("FROM Rating r WHERE r.user.id = " + Integer.toString(userId));
     }
 
     @Override
     @SuppressWarnings("unchecked")
     public List<Rating> findRatingsByEvent(int eventId) {
-        return (List<Rating>)getSession().createQuery("FROM Rating r WHERE r.event.id = " + Integer.toString(eventId));
+        return (List<Rating>) getSession().createQuery("FROM Rating r WHERE r.event.id = " + Integer.toString(eventId));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public Rating findRatingsByUserEvent(int eventId, String userName) {
+         List<Rating> result= getSession().createQuery("FROM Rating r WHERE (r.event.id = " + Integer.toString(eventId) +
+                ")AND (r.user.nickName ='" + userName+"')").list();
+        if (result.size() > 0) return result.get(0);
+        return null;
     }
 }

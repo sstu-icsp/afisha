@@ -2,6 +2,7 @@ package org.epl.controller;
 
 import org.epl.model.Event;
 import org.epl.model.Image;
+import org.epl.model.Rating;
 import org.epl.model.User;
 import org.epl.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class EventController {
@@ -34,26 +36,44 @@ public class EventController {
     private UserService userService;
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private RatingService ratingService;
 
     @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
     public String getEvent(@PathVariable int id, ModelMap model) {
         model.addAttribute("types", typeService.findAllType());
-        model.addAttribute("event", eventService.findById(id));
-        model.addAttribute("comments", commentService.findCommentsByEvent(id));
+
+        List<Rating> ratings = ratingService.findAllRatings();
+        Event event = eventService.findById(id);
+        int sumRating = 0;
+        int ratingCnt = 0;
+        for (Rating rating : ratings) {
+            if (event.getId() == rating.getEventId()) {
+                sumRating += rating.getRating();
+                ratingCnt++;
+            }
+        }
+        if (ratingCnt > 0)
+            sumRating = sumRating / ratingCnt;
+        event.setRating(sumRating);
+
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("gsdg" + auth.getName());
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             User user = userService.findByName(auth.getName());
+            Rating rating = ratingService.findRatingsByUserEvent(id, auth.getName());
+            if (rating != null)
+                event.setUserRating(rating.getRating());
             model.addAttribute("user", user);
             System.out.println(user.getNickName());
         }
+        model.addAttribute("event", event);
+        model.addAttribute("comments", commentService.findCommentsByEvent(id));
         return "event";
     }
 
-    @RequestMapping(value={"/new/**"}, method = RequestMethod.GET)
-    public String newEvent(ModelMap model)
-    {
+    @RequestMapping(value = {"/new/**"}, method = RequestMethod.GET)
+    public String newEvent(ModelMap model) {
         model.addAttribute("event", new Event());
         model.addAttribute("types", typeService.findAllType());
         model.addAttribute("cities", cityService.findAllCity());

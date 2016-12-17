@@ -59,6 +59,12 @@ public class Event {
     @Transient
     private String creatorName;
 
+    @Transient
+    private int rating;
+
+    @Transient
+    private int userRating;
+
     public LocalDateTime getDate() {
         return date;
     }
@@ -161,5 +167,21 @@ public class Event {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    public int getUserRating() {
+        return userRating;
+    }
+
+    public void setUserRating(int userRating) {
+        this.userRating = userRating;
     }
 }
