@@ -38,7 +38,36 @@ public class CommentController {
             com.setEvent(event);
             com.setComment(comment);
             commentService.saveComment(com);
+            return new ResponseEntity(Integer.toString(com.getId()), HttpStatus.OK); // send id of new comment
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/remove_comment", method = RequestMethod.POST)
+    public ResponseEntity removeComment(@RequestParam String userCreator,
+                                        @RequestParam int commentId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken) &&
+                userCreator.equals(auth.getName())) { // check user auth
+            commentService.deleteCommentById(commentId);
             return new ResponseEntity(HttpStatus.OK);
+        }
+        return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(value = "/update_comment", method = RequestMethod.POST)
+    public ResponseEntity updateComment(@RequestParam String userCreator,
+                                        @RequestParam String comment,
+                                        @RequestParam int commentId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (!(auth instanceof AnonymousAuthenticationToken) &&
+                userCreator.equals(auth.getName())) { // check user auth
+            Comment oldComment = commentService.findById(commentId);
+            if (oldComment.getUser().getNickName().equals(auth.getName())) {
+                oldComment.setComment(comment);
+                commentService.updateComment(oldComment);
+                return new ResponseEntity(HttpStatus.OK);
+            }
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
