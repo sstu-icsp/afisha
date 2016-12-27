@@ -39,11 +39,10 @@
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, <a
-                            href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
+                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <!-- csrt for log out-->
                     <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     </form>
                     <script>
                         function formSubmit() {
@@ -54,19 +53,16 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form" name="loginForm"
-                      action="<%=request.getContextPath()%>/login" method="POST">
+                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
                         <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <a href="register">
-                        <button type="button" class="btn btn-warning">Регистрация</button>
-                    </a>
+                    <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
                 </form>
             </c:otherwise>
         </c:choose>
@@ -80,25 +76,13 @@
             <div class="col-xs-8">
                 <div class="btn-group" id="genreTypesButton">
                     <ul class="nav nav-justified">
-                        <li>
-                            <button type="button" class="btn btn-default">Фильмы</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Концерты</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Шоу</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Хобби</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Спорт</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Театр</button>
-                        </li>
-                    </ul>
+                        <c:forEach items="${types}" var="type">
+
+                                <li><a href="<c:url value='/search/${type.id}' /> ">
+                                    <button type="button" class="btn btn-default">${type.name}</button> </a>
+                                </li>
+
+                        </c:forEach>
                 </div>
 
                 <!--В будущем этот скрипт будет фильтровать события при клике-->
@@ -112,9 +96,9 @@
                 </script>
             </div>
             <div class="col-xs-4">
-                <form class="form-inline pull-right" role="search">
+                <form class="form-inline pull-right" role="search" action="<c:url value='/search'/>" method="get">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Поиск">
+                        <input type="text" class="form-control" placeholder="Поиск" name="param">
                     </div>
                     <button type="submit" class="btn btn-default">Поиск</button>
                 </form>
@@ -122,33 +106,29 @@
         </div>
         <div class="clearfix"></div>
         <hr>
-        <H3>Сегодняшние мероприятия,<%= new java.util.Date() %>
+        <H3>Сегодняшние мероприятия, @Today.Date
         </H3>
         <div class="row-fluid">
             <!-- Конкретное событие -->
             <c:forEach items="${events}" var="event">
                 <div class="col-xs-3">
                     <div class="thumbnail">
-                        <a href="event/${event.id}">
-                            <img class="img-responsive eventImage" src="<c:url value='/image?id=${event.image.id}' />"
-                                 alt="EventImg">
-                        </a>
+                        <a href="<c:url value='/event/${event.id}' />"><img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg"></a>
                         <div class="caption">
                             <div class="pull-right">
-                                <c:forEach var="i" begin="1" end="${event.rating}">
-                                    <span class="glyphicon glyphicon-star"></span>
-                                </c:forEach>
-                                <c:forEach var="i" begin="${event.rating}" end="4">
-                                    <span class="glyphicon glyphicon-star-empty"></span>
-                                </c:forEach>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
                             </div>
-                            <a href="event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
+                            <a href="event/${event.id}"><h3>${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>
                 </div>
-                </c:forEach>
-                <!-- /Конкретное событие -->
+            </c:forEach>
+            <!-- /Конкретное событие -->
         </div>
     </div>
     <!--Filters-->

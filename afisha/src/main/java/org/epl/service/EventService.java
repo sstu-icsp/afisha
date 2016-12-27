@@ -10,4 +10,5 @@ public interface EventService {
 		void updateEvent(Event event);
 		void deleteEventById(int id);
 		List <Event> findAllEvent();
+	    List <Event> searchEvent(String text);
 }
