@@ -36,13 +36,14 @@
     <script type="text/javascript" src="<c:url value='/static/js/comment.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/static/js/rating.js'/>"></script>
     <style>
-
         .rightFilters {
             border: none
         }
 
-        #deleteRating{
-            cursor: pointer;}
+        #deleteRating {
+            cursor: pointer;
+        }
+
         .mainContent {
             border-right: 1px solid black;
         }
@@ -70,6 +71,23 @@
 
         .input-group-addon {
             cursor: pointer;
+        }
+
+        .commentbtns {
+            -webkit-transition: opacity 0.3s ease-in-out;
+            -moz-transition: opacity 0.3s ease-in-out;
+            -ms-transition: opacity 0.3s ease-in-out;
+            -o-transition: opacity 0.3s ease-in-out;
+            transition: opacity 0.3s ease-in-out;
+            opacity: 0;
+        }
+
+        .media-body:hover .commentbtns {
+            opacity: 1;
+        }
+
+        .editcomment {
+            display: none;
         }
     </style>
 </head>
@@ -165,28 +183,29 @@
                     var eventRating=${event.rating}
                     $(document).ready(function () {
 
-                        $('.glyphicon').mouseover(function () {
-                            $('.glyphicon').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                        $('.star').mouseover(function () {
+                            $('.star').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
                             for(i=1;i<=$(this).data("rating");i++){
                                 $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
                             }
                         })
-                        $('.glyphicon').mouseout(function () {
-                            $('.glyphicon').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                        $('.star').mouseout(function () {
+                            $('.star').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
                             for(i=1;i<=eventRating;i++){
                                 $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
                             }
                         })
+
                     });
 
                 </script>
                 <div class="eventRating col-xs-4">
                     <div class="pull-right">
                         <c:forEach var="i" begin="1" end="${event.rating}">
-                            <span class="glyphicon glyphicon-star" data-rating="${i}"></span>
+                            <span class="glyphicon glyphicon-star star" data-rating="${i}"></span>
                         </c:forEach>
                         <c:forEach var="i" begin="${event.rating+1}" end="5">
-                            <span class="glyphicon glyphicon-star-empty" data-rating="${i}"></span>
+                            <span class="glyphicon glyphicon-star-empty star" data-rating="${i}"></span>
                         </c:forEach>
                     </div>
                     <div class="pull-right" id="userRating">
@@ -232,8 +251,7 @@
                             <h3>Оставьте комментарий</h3>
                             <form class="form-group">
                                 <div class="input-group">
-                                    <input type="text" id="comment" class="form-control"
-                                           placeholder="Введите ваш комментарий" required>
+                                    <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий" required="required">
                                     <span class="input-group-addon" id="sendComment">
                                         <span class="glyphicon glyphicon-comment"></span>
                                     </span>
@@ -255,12 +273,24 @@
                     <c:forEach items="${comments}" var="comment">
                         <div class="media">
                             <a class="pull-left" href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">
-                                <img class="media-object" src="<c:url value='/image?id=${comment.user.image.id}' />"
-                                     alt="${comment.user.nickName}" width="100px" height="64px">
+                                <img class="media-object" src="<c:url value='/image?id=${comment.user.image.id}' />" alt="${comment.user.nickName}" width="100px" height="64px">
                             </a>
-                            <div class="media-body">
+                            <div class="media-body" id="comment_${comment.id}" data-commentid="${comment.id}">
+                                <c:if test="${comment.user.nickName == pageContext.request.userPrincipal.name}">
+                                    <span class="btn-group pull-right normalcomment commentbtns">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="glyphicon glyphicon-remove removecom"></span>
+                                    </span>
+                                    <span class="btn-group pull-right editcomment commentbtns">
+                                        <span class="glyphicon glyphicon-ok"></span>
+                                        <span class="glyphicon glyphicon-remove cancelcom"></span>
+                                    </span>
+                                </c:if>
                                 <h4 class="media-heading">${comment.user.nickName}</h4>
-                                    ${comment.comment}
+                                <div class="normalcomment commenttext">${comment.comment}</div>
+                                <c:if test="${comment.user.nickName == pageContext.request.userPrincipal.name}">
+                                    <textarea class="form-control editcomment" rows="1">${comment.comment}</textarea>
+                                </c:if>
                             </div>
                         </div>
                     </c:forEach>

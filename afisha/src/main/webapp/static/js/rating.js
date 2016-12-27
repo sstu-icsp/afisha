@@ -8,7 +8,7 @@ $(document).ready(function () {
         title: "Для голосования за событие необходимо авторизоваться"
     });
 
-    $(".glyphicon").click(function () {
+    $(".star").click(function () {
         var token = $("meta[name='_csrf']").attr("content");
         var header = $("meta[name='_csrf_header']").attr("content");
         var eventId = $('#eventId').val();
@@ -38,7 +38,7 @@ $(document).ready(function () {
                 $("#userRating").html(
                     "<span> Ваша оценка: <b>" + rating + "</b></span ><br>" +
                     "<a id='deleteRating'> Удалить оценку </a>");
-                $('.glyphicon').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
+                $('.star').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
                 for (i = 1; i <= rating; i++) {
                     $('[data-rating$=' + i + ']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
                 }
