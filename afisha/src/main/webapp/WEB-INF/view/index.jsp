@@ -76,25 +76,13 @@
             <div class="col-xs-8">
                 <div class="btn-group" id="genreTypesButton">
                     <ul class="nav nav-justified">
-                        <li>
-                            <button type="button" class="btn btn-default">Фильмы</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Концерты</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Шоу</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Хобби</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Спорт</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Театр</button>
-                        </li>
-                    </ul>
+                        <c:forEach items="${types}" var="type">
+
+                                <li><a href="<c:url value='/search/${type.id}' /> ">
+                                    <button type="button" class="btn btn-default">${type.name}</button> </a>
+                                </li>
+
+                        </c:forEach>
                 </div>
 
                 <!--В будущем этот скрипт будет фильтровать события при клике-->
@@ -125,7 +113,7 @@
             <c:forEach items="${events}" var="event">
                 <div class="col-xs-3">
                     <div class="thumbnail">
-                        <a href="event/${event.id}"><img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg"></a>
+                        <a href="<c:url value='/event/${event.id}' />"><img src="<c:url value='/image?id=${event.image.id}' />" alt="EventImg"></a>
                         <div class="caption">
                             <div class="pull-right">
                                 <span class="glyphicon glyphicon-star-empty"></span>

@@ -26,12 +26,12 @@ public class SearchServiceImpl implements SearchService
     {
         List <Event> events=new ArrayList<Event>();
         events.addAll(eventDao.findByTitle(param));
-        /*DateTime data=null;
-        try {
-        data= DateTime.parse(param);}
-        catch (Exception e)
-        {e.printStackTrace();}
-        if (data!=null) events.addAll(eventDao.findByDate(data.toDate()));*/
+
         return events;
+    }
+
+    @Override
+    public List<Event> searchEventById(int id) {
+        return eventDao.findByTypeId(id);
     }
 }

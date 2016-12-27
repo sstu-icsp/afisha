@@ -223,9 +223,10 @@
                     Комментарии <!-- Надо сверстать по-нормальному -->
                     <c:forEach items="${comments}" var="comment">
                         <div style="border: 1px solid black">
-                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">${comment.user.nickName}</a>
-                            <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}"><img src="<c:url value='/image?id=${comment.user.image.id}' />" alt="userImg"></a>
-                            <span>${comment.comment}</span>
+
+                            <div class="input-group"> <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">${comment.user.nickName}:</a></div>
+                            <hr/>
+                            <div class="input-group"> <span>${comment.comment}</span> </div>
                         </div>
                     </c:forEach>
                 </div>

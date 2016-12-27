@@ -9,4 +9,5 @@ import java.util.List;
  */
 public interface SearchService {
     List <Event> searchEvent(String param);
+    List <Event> searchEventById(int id);
 }

@@ -2,10 +2,12 @@ package org.epl.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Queue;
 
 import org.epl.model.Comment;
 import org.epl.model.Event;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -29,10 +31,13 @@ public class EventDaoImpl extends AbstractDao<Integer, Event> implements EventDa
 		return (List <Event>) criteria.list();
 	}
 	@Override
-	public List<Event> findByTitle(String title)
+	public List<Event> findByTitle(String n)
 	{
 
-		return (List<Event>)getSession().createQuery("FROM Event c WHERE c.title = " + title).list();
+		Query query=getSession().createQuery("FROM Event c WHERE c.title LIKE :name");
+		query.setParameter("name", "%"+n+"%");
+		return query.list();
+
 
 	}
 	@Override
@@ -40,5 +45,12 @@ public class EventDaoImpl extends AbstractDao<Integer, Event> implements EventDa
 	{
 		return null;
 		//return (List<Event>)getSession().createQuery("FROM Event c WHERE c.date="+date).list();
+	}
+	@Override
+	public  List<Event> findByTypeId(int id)
+	{
+		Query query=getSession().createQuery("FROM  Event c WHERE  c.type.id = :id");
+		query.setParameter("id",id);
+		return query.list();
 	}
 }

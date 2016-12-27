@@ -12,4 +12,5 @@ public interface EventDao {
 	List <Event> findAllEvent();
 	List <Event> findByTitle(String title);
 	List <Event> findByDate(Date date);
+	List<Event> findByTypeId(int id);
 }
