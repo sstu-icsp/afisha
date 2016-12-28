@@ -42,22 +42,7 @@ public class EventController {
     @RequestMapping(value = "/event/{id}", method = RequestMethod.GET)
     public String getEvent(@PathVariable int id, ModelMap model) {
         model.addAttribute("types", typeService.findAllType());
-
-        List<Rating> ratings = ratingService.findAllRatings();
         Event event = eventService.findById(id);
-        int sumRating = 0;
-        int ratingCnt = 0;
-        for (Rating rating : ratings) {
-            if (event.getId() == rating.getEventId()) {
-                sumRating += rating.getRating();
-                ratingCnt++;
-            }
-        }
-        if (ratingCnt > 0)
-            sumRating = sumRating / ratingCnt;
-        event.setRating(sumRating);
-
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!(auth instanceof AnonymousAuthenticationToken)) {
             User user = userService.findByName(auth.getName());

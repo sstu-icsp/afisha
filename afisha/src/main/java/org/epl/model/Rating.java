@@ -1,6 +1,7 @@
 package org.epl.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name="ratings")
@@ -73,5 +74,25 @@ public class Rating {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public static void countEventsRating(List<Event> events, List<Rating> ratings) {
+        for (Event event : events) {
+            countEventRating(event, ratings);
+        }
+    }
+
+    public static void countEventRating(Event event, List<Rating> ratings) {
+        int sumRating = 0;
+        int ratingCnt = 0;
+        for (Rating rating : ratings) {
+            if (event.getId() == rating.getEventId()) {
+                sumRating += rating.getRating();
+                ratingCnt++;
+            }
+        }
+        if (ratingCnt > 0)
+            sumRating = sumRating / ratingCnt;
+        event.setRating(sumRating);
     }
 }

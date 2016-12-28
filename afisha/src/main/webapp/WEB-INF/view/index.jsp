@@ -80,24 +80,11 @@
             <div class="col-xs-8">
                 <div class="btn-group" id="genreTypesButton">
                     <ul class="nav nav-justified">
-                        <li>
-                            <button type="button" class="btn btn-default">Фильмы</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Концерты</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Шоу</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Хобби</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Спорт</button>
-                        </li>
-                        <li>
-                            <button type="button" class="btn btn-default">Театр</button>
-                        </li>
+                        <c:forEach items="${types}" var="type">
+                            <li><a href="<c:url value='/search/${type.id}' /> ">
+                                <button type="button" class="btn btn-default">${type.name}</button> </a>
+                            </li>
+                        </c:forEach>
                     </ul>
                 </div>
 
@@ -112,9 +99,9 @@
                 </script>
             </div>
             <div class="col-xs-4">
-                <form class="form-inline pull-right" role="search">
+                <form class="form-inline pull-right" role="search" action="<c:url value='/search'/>" method="get">
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Поиск">
+                        <input type="text" class="form-control" placeholder="Поиск" name="param">
                     </div>
                     <button type="submit" class="btn btn-default">Поиск</button>
                 </form>
@@ -129,7 +116,7 @@
             <c:forEach items="${events}" var="event">
                 <div class="col-xs-3">
                     <div class="thumbnail">
-                        <a href="event/${event.id}">
+                        <a href="<%=request.getContextPath()%>/event/${event.id}">
                             <img class="img-responsive eventImage" src="<c:url value='/image?id=${event.image.id}' />"
                                  alt="EventImg">
                         </a>
@@ -142,7 +129,7 @@
                                     <span class="glyphicon glyphicon-star-empty"></span>
                                 </c:forEach>
                             </div>
-                            <a href="event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
+                            <a href="<%=request.getContextPath()%>/event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>

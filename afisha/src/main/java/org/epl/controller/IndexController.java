@@ -1,9 +1,9 @@
 package org.epl.controller;
 
 import org.epl.model.Event;
-import org.epl.model.Rating;
 import org.epl.service.EventService;
 import org.epl.service.RatingService;
+import org.epl.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -17,27 +17,14 @@ public class IndexController {
 	private EventService service;
 	@Autowired
 	private RatingService ratingService;
+	@Autowired
+	private TypeService typeService;
+
 	@RequestMapping(value={"/","/event","/event/list"})
-	public String index(ModelMap model)
-	{
-		List<Rating> ratings = ratingService.findAllRatings();
+	public String index(ModelMap model) {
 		List<Event> events = service.findAllEvent();
-
-		for (Event event : events) {
-			int sumRating = 0;
-			int ratingCnt = 0;
-			for (Rating rating : ratings) {
-				if (event.getId() == rating.getEventId()) {
-					sumRating += rating.getRating();
-					ratingCnt++;
-				}
-			}
-			if (ratingCnt > 0)
-				sumRating = sumRating / ratingCnt;
-			event.setRating(sumRating);
-		}
-
 		model.addAttribute("events", events);
+		model.addAttribute("types", typeService.findAllType());
 		return "index";
 	}
 }
