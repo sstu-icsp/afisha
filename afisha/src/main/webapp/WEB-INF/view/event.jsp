@@ -319,7 +319,7 @@
                                 </c:if>
                                 <h4 class="media-heading">${comment.user.nickName}</h4>
                                 <div class="normalcomment commenttext">${comment.comment}</div>
-                                <c:if test="${comment.user.nickName == pageContext.request.userPrincipal.name}">
+                                <c:if test="${comment.user.nickName.equals(pageContext.request.userPrincipal.name)}">
                                     <textarea class="form-control editcomment" rows="1">${comment.comment}</textarea>
                                 </c:if>
                             </div>

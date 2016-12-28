@@ -77,7 +77,14 @@
             <artifactId>joda-time</artifactId>
             <version>${joda-time.version}</version>
         </dependency>
-         
+
+        <!-- https://mvnrepository.com/artifact/joda-time/joda-time-jsptags -->
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time-jsptags</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
         <!-- To map JodaTime with database typeOfEvents -->
         <dependency>
             <groupId>org.jadira.usertype</groupId>

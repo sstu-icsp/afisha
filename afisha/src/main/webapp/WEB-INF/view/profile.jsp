@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://www.joda.org/joda/time/tags" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
@@ -31,6 +31,7 @@
 
     <script type="text/javascript" src="<c:url value='/static/js/bootstrap-filestyle.min.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/static/js/createEvent.js'/>"></script>
+    <script type="text/javascript" src="<c:url value='/static/js/profile.js'/>"></script>
 </head>
 <body>
 <style>
@@ -94,7 +95,7 @@
                                 <p>Имя</p>
                             </div>
                             <div class="col-xs-8">
-                                <p>${user.fullName}</p>
+                                <p id="fullNameLabel">${user.fullName}</p>
                             </div>
                         </div>
                         <div class="row userNick">
@@ -102,7 +103,7 @@
                                 <p>Ник</p>
                             </div>
                             <div class="col-xs-8">
-                                <p>${user.nickName}</p>
+                                <p id="nickNameLabel">${user.nickName}</p>
                             </div>
                         </div>
                         <div class="row userGender">
@@ -110,7 +111,7 @@
                                 <p>Пол</p>
                             </div>
                             <div class="col-xs-8">
-                                <p>${user.gender.name}</p>
+                                <p id="genderLabel">${user.gender.name}</p>
                             </div>
                         </div>
                         <div class="row userBirthday">
@@ -118,7 +119,7 @@
                                 <p>День рождения</p>
                             </div>
                             <div class="col-xs-8">
-                                <p>${user.birthDate}</p>
+                                <p id="birthDateLabel"><joda:format pattern="dd/MM/YYYY" value="${user.birthDate}" /></p>
                             </div>
                         </div>
                         <div class="row userCity">
@@ -126,13 +127,15 @@
                                 <p>Город</p>
                             </div>
                             <div class="col-xs-8">
-                                <p>${user.city.name}</p>
+                                <p id="cityLabel">${user.city.name}</p>
                             </div>
                         </div>
-                        <div class="row">
-                            <a class="btn btn-default pull-right" href="#infoEdit"
-                               data-toggle="tab">Редактировать</a>
-                        </div>
+                        <c:if test="${user.nickName.equals(pageContext.request.userPrincipal.name)}">
+                            <div class="row">
+                                <a class="btn btn-default pull-right" href="#infoEdit"
+                                   data-toggle="tab">Редактировать</a>
+                            </div>
+                        </c:if>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="infoEdit">
@@ -157,7 +160,7 @@
                                 </div>
                                 <div class="col-xs-8">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" value="${user.fullName}">
+                                        <input type="text" class="form-control" id="fullName" value="${user.fullName}">
                                     </div>
                                 </div>
                             </div>
@@ -166,9 +169,7 @@
                                     <p>Ник</p>
                                 </div>
                                 <div class="col-xs-8">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" value="${user.nickName}">
-                                    </div>
+                                    <p id="nickNameLabel2">${user.nickName}</p>
                                 </div>
                             </div>
                             <div class="row userGender">
@@ -179,15 +180,21 @@
                                     <div class="form-group">
                                         <div class="radio-inline">
                                             <label>
-                                                <input id="radioMale" name="gender" type="radio" <c:if
+                                                <input id="radioMale" name="gender" value="2" type="radio" <c:if
                                                         test="${user.gender.name.equals('Мужской')}"> checked</c:if>>
                                                 Мужской
                                             </label>
                                         </div>
                                         <div class="radio-inline">
-                                            <label><input id="radioFemale" name="gender" type="radio" <c:if
+                                            <label><input id="radioFemale" name="gender" value="3" type="radio" <c:if
                                                     test="${user.gender.name.equals('Женский')}"> checked</c:if>>
                                                 Женский
+                                            </label>
+                                        </div>
+                                        <div class="radio-inline">
+                                            <label><input id="radioNotSpecified" name="gender" value="1" type="radio" <c:if
+                                                    test="${user.gender.name.equals('Не определен')}"> checked</c:if>>
+                                                Не определен
                                             </label>
                                         </div>
                                     </div>
@@ -209,7 +216,7 @@
                                 <div class="col-xs-8">
                                     <div class="form-group">
                                         <div class='input-group date' id='datetimepicker'>
-                                            <input type='text' class="form-control"/>
+                                            <input type='text' id="birthDate" class="form-control"/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar">
                                             </span>
@@ -224,9 +231,9 @@
                                 </div>
                                 <div class="col-xs-8">
                                     <div class="form-group">
-                                        <select class="form-control">
+                                        <select class="form-control" id="city">
                                             <c:forEach items="${cities}" var="city">
-                                                <option>
+                                                <option value="${city.id}">
                                                         ${city.name}
                                                 </option>
                                             </c:forEach>
@@ -236,8 +243,12 @@
                             </div>
 
                             <div class="row">
-                                <a class="btn btn-default pull-right" href="#info"
-                                   data-toggle="tab">Сохранить</a>
+                                <form class="form-group" id="formProfile">
+                                    <a class="btn btn-default pull-right" href="#info"
+                                       data-toggle="tab">Отмена</a>
+                                    <a class="btn btn-default pull-right" id="saveprofile" href="#info"
+                                       data-toggle="tab">Сохранить</a>
+                                </form>
                             </div>
                         </form:form>
                     </div>
@@ -246,6 +257,7 @@
                 </div>
                 <div class="tab-pane fade" id="monitoredEvents"></div>
             </div>
+
             <div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
