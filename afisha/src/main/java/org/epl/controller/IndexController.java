@@ -1,6 +1,7 @@
 package org.epl.controller;
 
 import org.epl.model.Event;
+import org.epl.service.CityService;
 import org.epl.service.EventService;
 import org.epl.service.RatingService;
 import org.epl.service.TypeService;
@@ -19,12 +20,15 @@ public class IndexController {
 	private RatingService ratingService;
 	@Autowired
 	private TypeService typeService;
+	@Autowired
+	private CityService cityService;
 
 	@RequestMapping(value={"/","/event","/event/list"})
 	public String index(ModelMap model) {
 		List<Event> events = service.findAllEvent();
 		model.addAttribute("events", events);
 		model.addAttribute("types", typeService.findAllType());
+		model.addAttribute("cities", cityService.findAllCity());
 		return "index";
 	}
 }

@@ -81,22 +81,17 @@
                 <div class="btn-group" id="genreTypesButton">
                     <ul class="nav nav-justified">
                         <c:forEach items="${types}" var="type">
-                            <li><a href="<c:url value='/search/${type.id}' /> ">
-                                <button type="button" class="btn btn-default">${type.name}</button> </a>
+                            <li>
+                                <button type="button" class="btn btn-default
+                                <c:if test="${id==type.id}">
+                                    active
+                                </c:if>"
+                                        onclick="location.href='<c:url value='/search/${type.id}'/>'">${type.name}
+                                </button>
                             </li>
                         </c:forEach>
                     </ul>
                 </div>
-
-                <!--В будущем этот скрипт будет фильтровать события при клике-->
-                <script type="text/javascript">
-                    $(document).ready(function () {
-                        $("#genreTypesButton .btn").click(function () {
-                            $("#genreTypesButton .btn.active").button('toggle')
-                            $(this).button('toggle');
-                        });
-                    });
-                </script>
             </div>
             <div class="col-xs-4">
                 <form class="form-inline pull-right" role="search" action="<c:url value='/search'/>" method="get">
@@ -129,13 +124,14 @@
                                     <span class="glyphicon glyphicon-star-empty"></span>
                                 </c:forEach>
                             </div>
-                            <a href="<%=request.getContextPath()%>/event/${event.id}"><h3 class="eventTitle">${event.title}</h3></a>
+                            <a href="<%=request.getContextPath()%>/event/${event.id}"><h3
+                                    class="eventTitle">${event.title}</h3></a>
                             <h4>${event.city.name}</h4>
                         </div>
                     </div>
                 </div>
-                </c:forEach>
-                <!-- /Конкретное событие -->
+            </c:forEach>
+            <!-- /Конкретное событие -->
         </div>
     </div>
     <!--Filters-->
@@ -146,14 +142,16 @@
         <div class="cityChoosing ">
             <h2 class="text-center">Город</h2>
             <div class="col-xs-8 col-xs-offset-2 ">
-                <button type="button" class="btn btn-default  btn-block dropdown-toggle" data-toggle="dropdown">
-                    Выберите город
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Город1</a></li>
-                    <li><a href="#">Город2</a></li>
-                </ul>
+                <div class="form-group">
+                    <select class="form-control">
+                        <option>Выберите город</option>
+                        <c:forEach items="${cities}" var="city">
+                            <option>
+                                    ${city.name}
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -168,12 +166,8 @@
             </div>
             <script type="text/javascript">
                 $(function () {
-                    var minDate = new Date();
-                    //Когда будут работать запросы из БД, минимальную дату в календаре можно изменить на дату самого раннего на данный момент события
-                    minDate.setMonth(minDate.getMonth() - 1);
                     $("#datetimepicker8").datetimepicker({
                         format: 'DD/MM/YYYY',
-                        minDate: minDate,
                         locale: 'ru',
                         inline: true,
                     });

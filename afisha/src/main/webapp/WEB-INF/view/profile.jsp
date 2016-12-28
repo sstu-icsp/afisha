@@ -34,9 +34,7 @@
 </head>
 <body>
 <style>
-    .eventImg {
-        height: 236px !important;
-    }
+
 
     .top {
         margin-top: 100px;
