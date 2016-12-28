@@ -34,21 +34,21 @@
     <script src="<c:url value='https://api-maps.yandex.ru/2.1/?lang=ru_RU'/>" type="text/javascript"></script>
     <script type="text/javascript" src="<c:url value='/static/js/eventYandexMapsApi.js'/>"></script>
     <script type="text/javascript" src="<c:url value='/static/js/comment.js'/>"></script>
-    <script type="text/javascript" src="<c:url value='/static/js/rating.js'/>"></script>
     <style>
+
         .rightFilters {
             border: none
-        }
-
-        #deleteRating {
-            cursor: pointer;
         }
 
         .mainContent {
             border-right: 1px solid black;
         }
 
-        .eventRating .glyphicon {
+        #eventImage {
+            height: 236px;
+        }
+
+        .eventRating {
             font-size: 25px;
         }
 
@@ -64,30 +64,11 @@
         .mainContent li {
             pointer-events: none;
         }
-
         #hellospan {
             color: white;
         }
-
         .input-group-addon {
             cursor: pointer;
-        }
-
-        .commentbtns {
-            -webkit-transition: opacity 0.3s ease-in-out;
-            -moz-transition: opacity 0.3s ease-in-out;
-            -ms-transition: opacity 0.3s ease-in-out;
-            -o-transition: opacity 0.3s ease-in-out;
-            transition: opacity 0.3s ease-in-out;
-            opacity: 0;
-        }
-
-        .media-body:hover .commentbtns {
-            opacity: 1;
-        }
-
-        .editcomment {
-            display: none;
         }
     </style>
 </head>
@@ -98,17 +79,16 @@
     <div class="container-fluid">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>/">AFISHA</a>
+                <a class="navbar-brand projectBrand" href="<%=request.getContextPath()%>">AFISHA</a>
             </li>
         </ul>
         <c:choose>
             <c:when test="${pageContext.request.userPrincipal.name != null}">
                 <div class="navbar-form navbar-right">
-                    <span id="hellospan">Привет, <a
-                            href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
+                    <span id="hellospan">Привет, <a href="<%=request.getContextPath()%>/profile/${pageContext.request.userPrincipal.name}">${pageContext.request.userPrincipal.name}</a></span>
                     <!-- csrt for log out-->
                     <form action="<%=request.getContextPath()%>/logout" method="post" id="logoutForm">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     </form>
                     <script>
                         function formSubmit() {
@@ -119,19 +99,16 @@
                 </div>
             </c:when>
             <c:otherwise>
-                <form class="navbar-form navbar-right" role="form" name="loginForm"
-                      action="<%=request.getContextPath()%>/login" method="POST">
+                <form class="navbar-form navbar-right" role="form" name="loginForm" action="<%=request.getContextPath()%>/login" method="POST">
                     <div class="form-group">
                         <input type="text" placeholder="Имя пользователя" name="username" class="form-control">
                     </div>
                     <div class="form-group">
                         <input type="password" placeholder="Пароль" name="password" class="form-control">
                     </div>
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                     <button type="submit" class="btn btn-success">Войти</button>
-                    <a href="register">
-                        <button type="button" class="btn btn-warning">Регистрация</button>
-                    </a>
+                    <a href="register"><button type="button" class="btn btn-warning">Регистрация</button></a>
                 </form>
             </c:otherwise>
         </c:choose>
@@ -179,40 +156,13 @@
                 <div class="col-xs-8">
                     <h1>${event.title}</h1>
                 </div>
-                <script>
-                    var eventRating=${event.rating}
-                    $(document).ready(function () {
-
-                        $('.star').mouseover(function () {
-                            $('.star').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
-                            for(i=1;i<=$(this).data("rating");i++){
-                                $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
-                            }
-                        })
-                        $('.star').mouseout(function () {
-                            $('.star').removeClass("glyphicon-star").addClass("glyphicon-star-empty");
-                            for(i=1;i<=eventRating;i++){
-                                $('[data-rating$='+i+']').removeClass("glyphicon-star-empty").addClass("glyphicon-star");
-                            }
-                        })
-
-                    });
-
-                </script>
                 <div class="eventRating col-xs-4">
                     <div class="pull-right">
-                        <c:forEach var="i" begin="1" end="${event.rating}">
-                            <span class="glyphicon glyphicon-star star" data-rating="${i}"></span>
-                        </c:forEach>
-                        <c:forEach var="i" begin="${event.rating+1}" end="5">
-                            <span class="glyphicon glyphicon-star-empty star" data-rating="${i}"></span>
-                        </c:forEach>
-                    </div>
-                    <div class="pull-right" id="userRating">
-                        <c:if test="${pageContext.request.userPrincipal.name != null&&event.userRating!=0}">
-                            <span>Ваша оценка: <b>${event.userRating}</b></span><br>
-                            <a id='deleteRating'>Удалить оценку </a>
-                        </c:if>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
                     </div>
                 </div>
             </div>
@@ -251,14 +201,14 @@
                             <h3>Оставьте комментарий</h3>
                             <form class="form-group">
                                 <div class="input-group">
-                                    <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий" required="required">
-                                    <span class="input-group-addon" id="sendComment">
+                                    <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий">
+                                    <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-comment"></span>
                                     </span>
                                 </div>
-                                <input type="hidden" id="eventId" value="${event.id}"/>
-                                <input type="hidden" id="userCreator" value="${user.nickName}"/>
-                                <input type="hidden" id="userPic" value="${user.image.id}"/>
+                                <input type="hidden" id="eventId" value="${event.id}" />
+                                <input type="hidden" id="userCreator" value="${user.nickName}" />
+                                <input type="hidden" id="userPic" value="${user.image.id}" />
                             </form>
                         </c:when>
                         <c:otherwise>
@@ -270,28 +220,13 @@
 
             <div class="row">
                 <div class="col-xs-12" id="comments_block">
+                    Комментарии <!-- Надо сверстать по-нормальному -->
                     <c:forEach items="${comments}" var="comment">
-                        <div class="media">
-                            <a class="pull-left" href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">
-                                <img class="media-object" src="<c:url value='/image?id=${comment.user.image.id}' />" alt="${comment.user.nickName}" width="100px" height="64px">
-                            </a>
-                            <div class="media-body" id="comment_${comment.id}" data-commentid="${comment.id}">
-                                <c:if test="${comment.user.nickName == pageContext.request.userPrincipal.name}">
-                                    <span class="btn-group pull-right normalcomment commentbtns">
-                                        <span class="glyphicon glyphicon-pencil"></span>
-                                        <span class="glyphicon glyphicon-remove removecom"></span>
-                                    </span>
-                                    <span class="btn-group pull-right editcomment commentbtns">
-                                        <span class="glyphicon glyphicon-ok"></span>
-                                        <span class="glyphicon glyphicon-remove cancelcom"></span>
-                                    </span>
-                                </c:if>
-                                <h4 class="media-heading">${comment.user.nickName}</h4>
-                                <div class="normalcomment commenttext">${comment.comment}</div>
-                                <c:if test="${comment.user.nickName == pageContext.request.userPrincipal.name}">
-                                    <textarea class="form-control editcomment" rows="1">${comment.comment}</textarea>
-                                </c:if>
-                            </div>
+                        <div style="border: 1px solid black">
+
+                            <div class="input-group"> <a href="<%=request.getContextPath()%>/profile/${comment.user.nickName}">${comment.user.nickName}:</a></div>
+                            <hr/>
+                            <div class="input-group"> <span>${comment.comment}</span> </div>
                         </div>
                     </c:forEach>
                 </div>
