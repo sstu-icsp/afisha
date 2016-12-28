@@ -89,6 +89,8 @@
         .editcomment {
             display: none;
         }
+        #eventImage{cursor:pointer;}
+
     </style>
 </head>
 <body>
@@ -174,10 +176,39 @@
             </div>
         </div>
 
+        <div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <div class="modal-title">Просмотр изображения</div>
+                    </div>
+                    <div class="modal-body">
+                        <img class="img-responsive center-block" src="" alt="">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function() {
+                $('#eventImage').click(function(e) {
+                    e.preventDefault();
+                    $('#image-modal .modal-body img').attr('src', $(this).attr('src'));
+                    $("#image-modal").modal('show');
+                });
+                $('#image-modal .modal-body img').on('click', function() {
+                    $("#image-modal").modal('hide')
+                });
+            });
+        </script>
+
         <div class="col-xs-8">
             <div class="row">
                 <div class="col-xs-8">
-                    <h1>${event.title}</h1>
+                    <h1 class="eventTitle">${event.title}</h1>
                 </div>
                 <script>
                     var eventRating=${event.rating}

@@ -47,6 +47,7 @@
     .userData .dataTitle {
         font-size: 22px;
     }
+    .eventImg{cursor: pointer;}
 
 
 </style>
@@ -84,6 +85,9 @@
                                  class="eventImg img-responsive"/>
                         </div>
                     </div>
+
+
+
                     <div class="col-xs-9 userData">
                         <div class="row userName">
                             <div class="col-xs-4 dataTitle">
@@ -242,6 +246,34 @@
                 </div>
                 <div class="tab-pane fade" id="monitoredEvents"></div>
             </div>
+            <div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                            <div class="modal-title">Просмотр изображения</div>
+                        </div>
+                        <div class="modal-body">
+                            <img class="img-responsive center-block" src="" alt="">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+                $(function() {
+                    $('.eventImg').click(function(e) {
+                        e.preventDefault();
+                        $('#image-modal .modal-body img').attr('src', $(this).find('img').attr('src'));
+                        $("#image-modal").modal('show');
+                    });
+                    $('#image-modal .modal-body img').on('click', function() {
+                        $("#image-modal").modal('hide')
+                    });
+                });
+            </script>
         </div>
     </div>
 </div>
