@@ -280,7 +280,7 @@
                     <c:choose>
                         <c:when test="${user != null}">
                             <h3>Оставьте комментарий</h3>
-                            <form class="form-group">
+                            <form class="form-group" id="formComment">
                                 <div class="input-group">
                                     <input type="text" id="comment" class="form-control" placeholder="Введите ваш комментарий" required="required">
                                     <span class="input-group-addon" id="sendComment">

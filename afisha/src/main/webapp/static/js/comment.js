@@ -1,3 +1,5 @@
+
+
 $(document).ready(function () {
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
@@ -8,7 +10,12 @@ $(document).ready(function () {
         title: "Введите текст комментария"
     });
 
-    $("#sendComment").click(function () {
+    $("#formComment").submit(function () {
+        $("#sendComment").click();
+        return false;
+    });
+    $("#sendComment").click(
+    function() {
         var eventId = $('#eventId').val();
         var userCreator = $('#userCreator').val();
         var userPic = $("#userPic").val();
@@ -29,16 +36,16 @@ $(document).ready(function () {
                 xhr.setRequestHeader(header, token);
             },
             data: {
-                eventId : eventId,
-                userCreator : userCreator,
-                comment : comment
+                eventId: eventId,
+                userCreator: userCreator,
+                comment: comment
             },
-            success: function(result) {
+            success: function (result) {
                 var comment_block = '<div class="media">' +
-                    '<a class="pull-left" href="/Afisha/profile/'+ userCreator +'">' +
-                    '<img class="media-object" src="/Afisha/image?id='+ userPic +
-                    ' alt="'+userCreator+'" width="100px" height="64px" width="100px" height="64px" /></a>' +
-                    '<div class="media-body" id="comment_'+result+'" data-commentid="'+result+'">' +
+                    '<a class="pull-left" href="/Afisha/profile/' + userCreator + '">' +
+                    '<img class="media-object" src="/Afisha/image?id=' + userPic +
+                    ' " alt=' + userCreator + ' width="100px" height="64px" width="100px" height="64px" /></a>' +
+                    '<div class="media-body" id="comment_' + result + '" data-commentid="' + result + '">' +
                     '<span class="btn-group pull-right normalcomment commentbtns">' +
                     '<span class="glyphicon glyphicon-pencil"></span>' +
                     '<span class="glyphicon glyphicon-remove removecom"></span>' +
@@ -47,27 +54,27 @@ $(document).ready(function () {
                     '<span class="glyphicon glyphicon-ok"></span>' +
                     '<span class="glyphicon glyphicon-remove cancelcom"></span>' +
                     '</span>' +
-                    '<h4 class="media-heading">'+userCreator+'</h4>' +
-                    '<div class="normalcomment">'+comment+'</div>' +
-                    '<textarea class="form-control editcomment" rows="1">'+comment+'</textarea>' +
+                    '<h4 class="media-heading">' + userCreator + '</h4>' +
+                    '<div class="normalcomment">' + comment + '</div>' +
+                    '<textarea class="form-control editcomment" rows="1">' + comment + '</textarea>' +
                     '</div></div>';
                 $("#comments_block").append(comment_block);
                 $("#comment").val(""); // clear comment input
             },
-            error: function(jqXHR) {
+            error: function (jqXHR) {
                 console.log(jqXHR.responseText);
             }
         });
     });
 
-    $('#comments_block').on('click', '.glyphicon-pencil', function() {
+    $('#comments_block').on('click', '.glyphicon-pencil', function () {
         $(".editcomment").hide();
         $(".normalcomment").show();
         $(this).parent().parent().find(".normalcomment").hide();
         $(this).parent().parent().find(".editcomment").show();
     });
 
-    $('#comments_block').on('click', '.glyphicon-ok', function() {
+    $('#comments_block').on('click', '.glyphicon-ok', function () {
         var parent = $(this).parent().parent();
         $(parent).find(".normalcomment").show();
         $(parent).find(".editcomment").hide();
@@ -83,20 +90,20 @@ $(document).ready(function () {
                 xhr.setRequestHeader(header, token);
             },
             data: {
-                userCreator : userCreator,
-                comment : comment,
+                userCreator: userCreator,
+                comment: comment,
                 commentId: commentId
             },
-            success: function(result) {
+            success: function (result) {
                 $(parent).find(".commenttext").text(comment);
             },
-            error: function(jqXHR) {
+            error: function (jqXHR) {
                 console.log(jqXHR.responseText);
             }
         });
     });
 
-    $('#comments_block').on('click', '.removecom', function() {
+    $('#comments_block').on('click', '.removecom', function () {
         var parent = $(this).parent().parent();
         var userCreator = $('#userCreator').val();
         var commentId = $(parent).data("commentid");
@@ -107,20 +114,21 @@ $(document).ready(function () {
                 xhr.setRequestHeader(header, token);
             },
             data: {
-                userCreator : userCreator,
+                userCreator: userCreator,
                 commentId: commentId
             },
-            success: function(result) {
+            success: function (result) {
                 $(parent).parent().remove();
             },
-            error: function(jqXHR) {
+            error: function (jqXHR) {
                 console.log(jqXHR.responseText);
             }
         });
     });
 
-    $('#comments_block').on('click', '.cancelcom', function() {
+    $('#comments_block').on('click', '.cancelcom', function () {
         $(this).parent().parent().find(".normalcomment").show();
         $(this).parent().parent().find(".editcomment").hide();
     });
-});
+})
+;
