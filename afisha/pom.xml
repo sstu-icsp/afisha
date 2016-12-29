@@ -78,7 +78,6 @@
             <version>${joda-time.version}</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/joda-time/joda-time-jsptags -->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time-jsptags</artifactId>

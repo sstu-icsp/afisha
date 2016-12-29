@@ -2,6 +2,8 @@
          pageEncoding="utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt" %>
+<%@ taglib prefix="joda" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -104,7 +106,7 @@
         </div>
         <div class="clearfix"></div>
         <hr>
-        <H3>Сегодняшние мероприятия,<%= new java.util.Date() %>
+        <H3>Сегодняшние мероприятия, <joda:formatDate value="<%= new java.util.Date() %>" pattern="dd/MM/yyyy" />
         </H3>
         <div class="row-fluid">
             <!-- Конкретное событие -->
